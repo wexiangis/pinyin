@@ -73,3 +73,6 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui
+
+RESOURCES += \
+    pic.qrc

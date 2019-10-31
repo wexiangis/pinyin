@@ -508,6 +508,25 @@
     </item>
    </layout>
   </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>336</x>
+     <y>160</y>
+     <width>144</width>
+     <height>112</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="pic.qrc">:/res/kb-tips.png</pixmap>
+   </property>
+  </widget>
+  <zorder>label_2</zorder>
+  <zorder>verticalLayoutWidget</zorder>
+  <zorder>gridLayoutWidget</zorder>
  </widget>
  <tabstops>
   <tabstop>pushButton</tabstop>
@@ -545,6 +564,8 @@
   <tabstop>pushButton_31</tabstop>
   <tabstop>pushButton_34</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="pic.qrc"/>
+ </resources>
  <connections/>
 </ui>
