@@ -43,16 +43,18 @@ MainWindow::MainWindow(QWidget *parent) :
 //    im_close_decoder();
 
     //---------- 控件遍历 ---------
-//    QObjectList list = ui->gridLayoutWidget->children() ;
-//    qDebug() << list.length()  << endl;
-//    foreach (QObject *obj, list)
-//    {
-//        if(obj->objectName ().indexOf("pushButton") == 0)
-//        {
+    QObjectList list = ui->gridLayoutWidget->children() ;
+    qDebug() << list.length()  << endl;
+    foreach (QObject *obj, list)
+    {
+        if(obj->objectName ().indexOf("pushButton") == 0)
+        {
 //            qDebug() << obj->objectName ();
-//            obj->installEventFilter (this);
-//        }
-//    }
+            obj->installEventFilter (this);
+        }
+    }
+
+//    ui->widget_candidate->hide ();
 }
 
 MainWindow::~MainWindow()
