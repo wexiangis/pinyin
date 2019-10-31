@@ -72,8 +72,11 @@
         <height>56</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
-       <string>h</string>
+       <string>q</string>
       </property>
      </widget>
     </item>
@@ -86,7 +89,7 @@
        </size>
       </property>
       <property name="text">
-       <string>s</string>
+       <string>w</string>
       </property>
      </widget>
     </item>
@@ -99,7 +102,7 @@
        </size>
       </property>
       <property name="text">
-       <string>c</string>
+       <string>e</string>
       </property>
      </widget>
     </item>
@@ -112,7 +115,7 @@
        </size>
       </property>
       <property name="text">
-       <string>v</string>
+       <string>r</string>
       </property>
      </widget>
     </item>
@@ -125,7 +128,7 @@
        </size>
       </property>
       <property name="text">
-       <string>i</string>
+       <string>t</string>
       </property>
      </widget>
     </item>
@@ -138,7 +141,7 @@
        </size>
       </property>
       <property name="text">
-       <string>d</string>
+       <string>y</string>
       </property>
      </widget>
     </item>
@@ -151,7 +154,7 @@
        </size>
       </property>
       <property name="text">
-       <string>g</string>
+       <string>u</string>
       </property>
      </widget>
     </item>
@@ -164,7 +167,7 @@
        </size>
       </property>
       <property name="text">
-       <string>p</string>
+       <string>i</string>
       </property>
      </widget>
     </item>
@@ -177,7 +180,7 @@
        </size>
       </property>
       <property name="text">
-       <string>b</string>
+       <string>o</string>
       </property>
      </widget>
     </item>
@@ -190,7 +193,7 @@
        </size>
       </property>
       <property name="text">
-       <string>t</string>
+       <string>p</string>
       </property>
      </widget>
     </item>
@@ -203,7 +206,7 @@
        </size>
       </property>
       <property name="text">
-       <string>x</string>
+       <string>a</string>
       </property>
      </widget>
     </item>
@@ -216,7 +219,7 @@
        </size>
       </property>
       <property name="text">
-       <string>r</string>
+       <string>s</string>
       </property>
      </widget>
     </item>
@@ -229,7 +232,7 @@
        </size>
       </property>
       <property name="text">
-       <string>o</string>
+       <string>d</string>
       </property>
      </widget>
     </item>
@@ -242,7 +245,7 @@
        </size>
       </property>
       <property name="text">
-       <string>w</string>
+       <string>f</string>
       </property>
      </widget>
     </item>
@@ -255,7 +258,7 @@
        </size>
       </property>
       <property name="text">
-       <string>u</string>
+       <string>g</string>
       </property>
      </widget>
     </item>
@@ -268,7 +271,7 @@
        </size>
       </property>
       <property name="text">
-       <string>e</string>
+       <string>h</string>
       </property>
      </widget>
     </item>
@@ -281,7 +284,7 @@
        </size>
       </property>
       <property name="text">
-       <string>f</string>
+       <string>j</string>
       </property>
      </widget>
     </item>
@@ -294,7 +297,7 @@
        </size>
       </property>
       <property name="text">
-       <string>z</string>
+       <string>k</string>
       </property>
      </widget>
     </item>
@@ -307,7 +310,7 @@
        </size>
       </property>
       <property name="text">
-       <string>n</string>
+       <string>l</string>
       </property>
      </widget>
     </item>
@@ -320,7 +323,7 @@
        </size>
       </property>
       <property name="text">
-       <string>a</string>
+       <string>翻页</string>
       </property>
      </widget>
     </item>
@@ -333,7 +336,7 @@
        </size>
       </property>
       <property name="text">
-       <string>q</string>
+       <string>z</string>
       </property>
      </widget>
     </item>
@@ -346,7 +349,7 @@
        </size>
       </property>
       <property name="text">
-       <string>y</string>
+       <string>x</string>
       </property>
      </widget>
     </item>
@@ -359,7 +362,7 @@
        </size>
       </property>
       <property name="text">
-       <string>j</string>
+       <string>c</string>
       </property>
      </widget>
     </item>
@@ -372,7 +375,7 @@
        </size>
       </property>
       <property name="text">
-       <string>l</string>
+       <string>v</string>
       </property>
      </widget>
     </item>
@@ -385,7 +388,7 @@
        </size>
       </property>
       <property name="text">
-       <string>k</string>
+       <string>b</string>
       </property>
      </widget>
     </item>
@@ -398,7 +401,7 @@
        </size>
       </property>
       <property name="text">
-       <string>拼音</string>
+       <string>n</string>
       </property>
      </widget>
     </item>
@@ -411,7 +414,7 @@
        </size>
       </property>
       <property name="text">
-       <string>小写</string>
+       <string>m</string>
       </property>
      </widget>
     </item>
@@ -424,7 +427,7 @@
        </size>
       </property>
       <property name="text">
-       <string>大写</string>
+       <string>拼音</string>
       </property>
      </widget>
     </item>
@@ -437,7 +440,7 @@
        </size>
       </property>
       <property name="text">
-       <string>数字</string>
+       <string>小写</string>
       </property>
      </widget>
     </item>
@@ -450,7 +453,7 @@
        </size>
       </property>
       <property name="text">
-       <string>符号</string>
+       <string>大写</string>
       </property>
      </widget>
     </item>
@@ -463,7 +466,7 @@
        </size>
       </property>
       <property name="text">
-       <string>保存</string>
+       <string>数字</string>
       </property>
      </widget>
     </item>
@@ -476,7 +479,7 @@
        </size>
       </property>
       <property name="text">
-       <string>翻页</string>
+       <string>符号</string>
       </property>
      </widget>
     </item>
@@ -489,7 +492,7 @@
        </size>
       </property>
       <property name="text">
-       <string>m</string>
+       <string>返回</string>
       </property>
      </widget>
     </item>
@@ -502,7 +505,7 @@
        </size>
       </property>
       <property name="text">
-       <string>返回</string>
+       <string>保存</string>
       </property>
      </widget>
     </item>

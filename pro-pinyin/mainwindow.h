@@ -16,6 +16,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void jump_rule(int th, int keyType);
+
     bool eventFilter (QObject *obj, QEvent *event);
 
 private:
