@@ -150,24 +150,8 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <item row="0" column="0">
-     <widget class="QPushButton" name="pushButton_1">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string>q</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QPushButton" name="pushButton_2">
+    <item row="1" column="1">
+     <widget class="QPushButton" name="pushButton_12">
       <property name="minimumSize">
        <size>
         <width>48</width>
@@ -175,7 +159,7 @@
        </size>
       </property>
       <property name="text">
-       <string>w</string>
+       <string>s</string>
       </property>
      </widget>
     </item>
@@ -192,6 +176,87 @@
       </property>
      </widget>
     </item>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="pushButton_22">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>x</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="6">
+     <widget class="QPushButton" name="pushButton_34">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>保存</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4">
+     <widget class="QPushButton" name="pushButton_32">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>符号</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QPushButton" name="pushButton_30">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>大写</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>w</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="pushButton_1">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>q</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="3">
      <widget class="QPushButton" name="pushButton_4">
       <property name="minimumSize">
@@ -202,123 +267,6 @@
       </property>
       <property name="text">
        <string>r</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="4">
-     <widget class="QPushButton" name="pushButton_5">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>t</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="5">
-     <widget class="QPushButton" name="pushButton_6">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>y</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="6">
-     <widget class="QPushButton" name="pushButton_7">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>u</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="7">
-     <widget class="QPushButton" name="pushButton_8">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>i</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="8">
-     <widget class="QPushButton" name="pushButton_9">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>o</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="9">
-     <widget class="QPushButton" name="pushButton_10">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>p</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="pushButton_11">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>a</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="pushButton_12">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>s</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QPushButton" name="pushButton_13">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>d</string>
       </property>
      </widget>
     </item>
@@ -335,8 +283,8 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="4">
-     <widget class="QPushButton" name="pushButton_15">
+    <item row="2" column="5">
+     <widget class="QPushButton" name="pushButton_26">
       <property name="minimumSize">
        <size>
         <width>48</width>
@@ -344,46 +292,7 @@
        </size>
       </property>
       <property name="text">
-       <string>g</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="5">
-     <widget class="QPushButton" name="pushButton_16">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>h</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="6">
-     <widget class="QPushButton" name="pushButton_17">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>j</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="7">
-     <widget class="QPushButton" name="pushButton_18">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>k</string>
+       <string>n</string>
       </property>
      </widget>
     </item>
@@ -400,8 +309,8 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="9">
-     <widget class="QPushButton" name="pushButton_20">
+    <item row="1" column="2">
+     <widget class="QPushButton" name="pushButton_13">
       <property name="minimumSize">
        <size>
         <width>48</width>
@@ -409,12 +318,12 @@
        </size>
       </property>
       <property name="text">
-       <string>翻页</string>
+       <string>d</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="pushButton_21">
+    <item row="1" column="7">
+     <widget class="QPushButton" name="pushButton_18">
       <property name="minimumSize">
        <size>
         <width>48</width>
@@ -422,12 +331,12 @@
        </size>
       </property>
       <property name="text">
-       <string>z</string>
+       <string>k</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QPushButton" name="pushButton_22">
+    <item row="0" column="5">
+     <widget class="QPushButton" name="pushButton_6">
       <property name="minimumSize">
        <size>
         <width>48</width>
@@ -435,12 +344,12 @@
        </size>
       </property>
       <property name="text">
-       <string>x</string>
+       <string>y</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="2">
-     <widget class="QPushButton" name="pushButton_23">
+    <item row="0" column="7">
+     <widget class="QPushButton" name="pushButton_8">
       <property name="minimumSize">
        <size>
         <width>48</width>
@@ -448,7 +357,20 @@
        </size>
       </property>
       <property name="text">
-       <string>c</string>
+       <string>i</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QPushButton" name="pushButton_31">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>数字</string>
       </property>
      </widget>
     </item>
@@ -465,8 +387,8 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="4">
-     <widget class="QPushButton" name="pushButton_25">
+    <item row="0" column="9">
+     <widget class="QPushButton" name="pushButton_10">
       <property name="minimumSize">
        <size>
         <width>48</width>
@@ -474,12 +396,12 @@
        </size>
       </property>
       <property name="text">
-       <string>b</string>
+       <string>p</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="5">
-     <widget class="QPushButton" name="pushButton_26">
+    <item row="3" column="5">
+     <widget class="QPushButton" name="pushButton_33">
       <property name="minimumSize">
        <size>
         <width>48</width>
@@ -487,7 +409,7 @@
        </size>
       </property>
       <property name="text">
-       <string>n</string>
+       <string>返回</string>
       </property>
      </widget>
     </item>
@@ -501,6 +423,149 @@
       </property>
       <property name="text">
        <string>m</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="pushButton_11">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>a</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="pushButton_21">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>z</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="9">
+     <widget class="QPushButton" name="pushButton_20">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>翻页</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="6">
+     <widget class="QPushButton" name="pushButton_17">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>j</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QPushButton" name="pushButton_5">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>t</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="6">
+     <widget class="QPushButton" name="pushButton_7">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>u</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="5">
+     <widget class="QPushButton" name="pushButton_16">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>h</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="8">
+     <widget class="QPushButton" name="pushButton_9">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>o</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QPushButton" name="pushButton_25">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>b</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QPushButton" name="pushButton_23">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>c</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4">
+     <widget class="QPushButton" name="pushButton_15">
+      <property name="minimumSize">
+       <size>
+        <width>48</width>
+        <height>56</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>g</string>
       </property>
      </widget>
     </item>
@@ -530,74 +595,9 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="2">
-     <widget class="QPushButton" name="pushButton_30">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>大写</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="3">
-     <widget class="QPushButton" name="pushButton_31">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>数字</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="4">
-     <widget class="QPushButton" name="pushButton_32">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>符号</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="5">
-     <widget class="QPushButton" name="pushButton_33">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>返回</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="6">
-     <widget class="QPushButton" name="pushButton_34">
-      <property name="minimumSize">
-       <size>
-        <width>48</width>
-        <height>56</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>保存</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="label_kb_tips">
+  <widget class="QWidget" name="widget_kb_tips" native="true">
    <property name="geometry">
     <rect>
      <x>336</x>
@@ -606,14 +606,315 @@
      <height>112</height>
     </rect>
    </property>
-   <property name="text">
-    <string/>
+   <property name="minimumSize">
+    <size>
+     <width>144</width>
+     <height>112</height>
+    </size>
    </property>
-   <property name="pixmap">
-    <pixmap resource="pic.qrc">:/res/kb-tips.png</pixmap>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>1</number>
+    </property>
+    <property name="leftMargin">
+     <number>2</number>
+    </property>
+    <property name="topMargin">
+     <number>1</number>
+    </property>
+    <property name="rightMargin">
+     <number>1</number>
+    </property>
+    <property name="bottomMargin">
+     <number>1</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_tips_up">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+border-radius:10px;
+padding:2px 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>上</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_tips_down">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+border-radius:10px;
+padding:2px 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>下</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_tips_L">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+border-radius:10px;
+padding:2px 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>前移</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_tips_N">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+border-radius:10px;
+padding:2px 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>后移</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <property name="leftMargin">
+       <number>18</number>
+      </property>
+      <property name="rightMargin">
+       <number>18</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_tips_ent">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+border-radius:10px;
+padding:2px 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>确认</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_tips_ret">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+border-radius:10px;
+padding:2px 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>返回</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_select">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+border-radius:10px;
+padding:2px 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>选择</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <property name="spacing">
+       <number>1</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_tips_left">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+border-radius:10px;
+padding:2px 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>左</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_tips_right">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+border-radius:10px;
+padding:2px 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string>右</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_tips_x">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+border-radius:10px;
+padding:2px 4px;
+background-color: rgb(211, 215, 207);</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_tips_y">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:2px groove orange;
+background-color: rgb(211, 215, 207);
+border-radius:10px;
+padding:2px 4px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
-  <zorder>label_kb_tips</zorder>
+  <zorder>widget_kb_tips</zorder>
   <zorder>verticalLayoutWidget</zorder>
   <zorder>gridLayoutWidget</zorder>
  </widget>
@@ -653,8 +954,6 @@
   <tabstop>pushButton_33</tabstop>
   <tabstop>pushButton_34</tabstop>
  </tabstops>
- <resources>
-  <include location="pic.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
