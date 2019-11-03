@@ -45,7 +45,8 @@ SOURCES += \
     googlepinyin/sync.cpp \
     googlepinyin/userdict.cpp \
     googlepinyin/utf16char.cpp \
-    googlepinyin/utf16reader.cpp
+    googlepinyin/utf16reader.cpp \
+    vkeyboard.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -69,10 +70,12 @@ HEADERS += \
     googlepinyin/sync.h \
     googlepinyin/userdict.h \
     googlepinyin/utf16char.h \
-    googlepinyin/utf16reader.h
+    googlepinyin/utf16reader.h \
+    vkeyboard.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    vkeyboard.ui
 
 RESOURCES += \
     pic.qrc

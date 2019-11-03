@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QKeyEvent>
 
 namespace Ui {
 class MainWindow;
@@ -16,9 +15,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void jump_rule(int th, int keyType);
-
-    bool eventFilter (QObject *obj, QEvent *event);
+private slots:
+    void on_toolButton_clicked();
 
 private:
     Ui::MainWindow *ui;
