@@ -6,6 +6,12 @@
 
 using namespace ime_pinyin;
 
+void MyTextEdit::startCursor(void)
+{
+    QFocusEvent fe(QEvent::FocusIn, Qt::TabFocusReason);
+    focusInEvent (&fe);
+}
+
 VKeyboard::VKeyboard(QWidget *parent) :
     QWidget(parent, Qt::FramelessWindowHint),
     ui(new Ui::VKeyboard)
@@ -54,7 +60,16 @@ VKeyboard::VKeyboard(QWidget *parent) :
         }
     }
 
-    ui->widget_candidate->hide ();
+    //
+    mte = new MyTextEdit();
+    mte->setText ("1214524536");
+    mte->setFocusPolicy (Qt::NoFocus);
+    mte->setLineWrapMode (QTextEdit::NoWrap);
+    mte->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+    mte->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+    ui->verticalLayout->insertWidget (0, mte);
+    mte->startCursor();
+    mte->moveCursor (QTextCursor::EndOfLine);
 }
 
 VKeyboard::~VKeyboard()
@@ -129,6 +144,12 @@ void VKeyboard::jump_rule(int th, int keyType)
         focusNextPrevChild (isNext);
 }
 
+bool VKeyboard::clicked_rule(QPushButton *pb)
+{
+    mte->append (pb->text ());
+    return false;
+}
+
 bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
 {
     if(obj->parent() == ui->gridLayoutWidget)
@@ -150,6 +171,9 @@ bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
                 case Qt::Key_C:
                     exit(0);
                     break;
+                case Qt::Key_Space:
+                    if(clicked_rule((QPushButton*)obj))
+                        break;
                 default:
                     return QWidget::eventFilter(obj, event);
             }
