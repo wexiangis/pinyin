@@ -4,6 +4,20 @@
 #include "pinyinime.h"
 #include <QDebug>
 
+//键盘上下左右跳转指针,放置到pushButton的userData中
+class KeyboardGrid : public QObjectUserData
+{
+public:
+    KeyboardGrid(QPushButton *u, QPushButton *d, QPushButton *l, QPushButton *r)
+    {
+        udlr[0] = l;
+        udlr[1] = u;
+        udlr[2] = r;
+        udlr[3] = d;
+    };
+    QPushButton *udlr[4];
+};
+
 using namespace ime_pinyin;
 
 void MyTextEdit::startCursor(void)
@@ -12,11 +26,12 @@ void MyTextEdit::startCursor(void)
     focusInEvent (&fe);
 }
 
-VKeyboard::VKeyboard(QWidget *parent) :
+VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
     QWidget(parent, Qt::FramelessWindowHint),
     ui(new Ui::VKeyboard)
 {
     ui->setupUi(this);
+    this->setGeometry (0, 0, this->width (), this->height ());
 
     //---------- 拼音接口 ---------
 //    if(!im_open_decoder((const char *)"./dict_pinyin.dat", (const char *)"./dict_pinyin_user.dat"))
@@ -48,105 +63,165 @@ VKeyboard::VKeyboard(QWidget *parent) :
 //    }
 //    im_close_decoder();
 
-    //---------- 控件遍历 ---------
+    //遍历控件,连接到eventFilter()
     QObjectList list = ui->gridLayoutWidget->children() ;
     qDebug() << list.length()  << endl;
     foreach (QObject *obj, list)
     {
         if(obj->objectName ().indexOf("pushButton") == 0)
-        {
-//            qDebug() << obj->objectName ();
             obj->installEventFilter (this);
-        }
     }
-
+    //光标闪烁的输入行
+    textEdit = new MyTextEdit();
+    textEdit->setPlainText ("白日依山尽");
+    textEdit->setFocusPolicy (Qt::NoFocus);
+    textEdit->setLineWrapMode (QTextEdit::NoWrap);
+    textEdit->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+    textEdit->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+    ui->verticalLayout->insertWidget (0, textEdit);
+    textEdit->startCursor();
+    textEdit->moveCursor (QTextCursor::EndOfLine);
+    //输入字符范围限制
+    if(type != ANY)
+    {
+        if(type > 0x20)
+        {
+            ;
+        }
+        else
+        {
+            ;
+        }
+        //空格键
+        ui->pushButton_20->setEnabled (space);
+        //回车键
+        ui->pushButton_28->setEnabled (multiLine);
+    }
+    //网格跳转属性初始化
+    keyboard_grid_init();
     //
-    mte = new MyTextEdit();
-    mte->setText ("1214524536");
-    mte->setFocusPolicy (Qt::NoFocus);
-    mte->setLineWrapMode (QTextEdit::NoWrap);
-    mte->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
-    mte->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
-    ui->verticalLayout->insertWidget (0, mte);
-    mte->startCursor();
-    mte->moveCursor (QTextCursor::EndOfLine);
+    ui->widget_candidate->hide ();
 }
 
 VKeyboard::~VKeyboard()
 {
+    //遍历控件,销毁userData
+    KeyboardGrid *kg;
+    QObjectList list = ui->gridLayoutWidget->children() ;
+    foreach (QObject *obj, list)
+    {
+        if(obj->objectName ().indexOf("pushButton") == 0)
+        {
+            kg = (KeyboardGrid*)(obj->userData (0));
+            if(kg)
+                delete kg;
+        }
+    }
+    //
     delete ui;
 }
 
-void VKeyboard::jump_rule(int th, int keyType)
+void VKeyboard::keyboard_grid_init()
 {
-    int col = 10;
-    bool isNext = false;
-    //
-    if(keyType == Qt::Key_Up)
+    ui->pushButton_1->setUserData (0, new KeyboardGrid(ui->pushButton_28, ui->pushButton_11, ui->pushButton_10, ui->pushButton_2));
+    ui->pushButton_2->setUserData (0, new KeyboardGrid(ui->pushButton_29, ui->pushButton_12, ui->pushButton_1, ui->pushButton_3));
+    ui->pushButton_3->setUserData (0, new KeyboardGrid(ui->pushButton_30, ui->pushButton_13, ui->pushButton_2, ui->pushButton_4));
+    ui->pushButton_4->setUserData (0, new KeyboardGrid(ui->pushButton_31, ui->pushButton_14, ui->pushButton_3, ui->pushButton_5));
+    ui->pushButton_5->setUserData (0, new KeyboardGrid(ui->pushButton_32, ui->pushButton_15, ui->pushButton_4, ui->pushButton_6));
+    ui->pushButton_6->setUserData (0, new KeyboardGrid(ui->pushButton_33, ui->pushButton_16, ui->pushButton_5, ui->pushButton_7));
+    ui->pushButton_7->setUserData (0, new KeyboardGrid(ui->pushButton_34, ui->pushButton_17, ui->pushButton_6, ui->pushButton_8));
+    ui->pushButton_8->setUserData (0, new KeyboardGrid(ui->pushButton_34, ui->pushButton_18, ui->pushButton_7, ui->pushButton_9));
+    ui->pushButton_9->setUserData (0, new KeyboardGrid(ui->pushButton_34, ui->pushButton_19, ui->pushButton_8, ui->pushButton_10));
+    ui->pushButton_10->setUserData (0, new KeyboardGrid(ui->pushButton_34, ui->pushButton_20, ui->pushButton_9, ui->pushButton_1));
+
+    ui->pushButton_11->setUserData (0, new KeyboardGrid(ui->pushButton_1, ui->pushButton_21, ui->pushButton_20, ui->pushButton_12));
+    ui->pushButton_12->setUserData (0, new KeyboardGrid(ui->pushButton_2, ui->pushButton_22, ui->pushButton_11, ui->pushButton_13));
+    ui->pushButton_13->setUserData (0, new KeyboardGrid(ui->pushButton_3, ui->pushButton_23, ui->pushButton_12, ui->pushButton_14));
+    ui->pushButton_14->setUserData (0, new KeyboardGrid(ui->pushButton_4, ui->pushButton_24, ui->pushButton_13, ui->pushButton_15));
+    ui->pushButton_15->setUserData (0, new KeyboardGrid(ui->pushButton_5, ui->pushButton_25, ui->pushButton_14, ui->pushButton_16));
+    ui->pushButton_16->setUserData (0, new KeyboardGrid(ui->pushButton_6, ui->pushButton_26, ui->pushButton_15, ui->pushButton_17));
+    ui->pushButton_17->setUserData (0, new KeyboardGrid(ui->pushButton_7, ui->pushButton_27, ui->pushButton_16, ui->pushButton_18));
+    ui->pushButton_18->setUserData (0, new KeyboardGrid(ui->pushButton_8, ui->pushButton_27, ui->pushButton_17, ui->pushButton_19));
+    ui->pushButton_19->setUserData (0, new KeyboardGrid(ui->pushButton_9, ui->pushButton_27, ui->pushButton_18, ui->pushButton_20));
+    ui->pushButton_20->setUserData (0, new KeyboardGrid(ui->pushButton_10, ui->pushButton_27, ui->pushButton_19, ui->pushButton_11));
+
+    ui->pushButton_21->setUserData (0, new KeyboardGrid(ui->pushButton_11, ui->pushButton_28, ui->pushButton_27, ui->pushButton_22));
+    ui->pushButton_22->setUserData (0, new KeyboardGrid(ui->pushButton_12, ui->pushButton_29, ui->pushButton_21, ui->pushButton_23));
+    ui->pushButton_23->setUserData (0, new KeyboardGrid(ui->pushButton_13, ui->pushButton_30, ui->pushButton_22, ui->pushButton_24));
+    ui->pushButton_24->setUserData (0, new KeyboardGrid(ui->pushButton_14, ui->pushButton_31, ui->pushButton_23, ui->pushButton_25));
+    ui->pushButton_25->setUserData (0, new KeyboardGrid(ui->pushButton_15, ui->pushButton_32, ui->pushButton_24, ui->pushButton_26));
+    ui->pushButton_26->setUserData (0, new KeyboardGrid(ui->pushButton_16, ui->pushButton_33, ui->pushButton_25, ui->pushButton_27));
+    ui->pushButton_27->setUserData (0, new KeyboardGrid(ui->pushButton_17, ui->pushButton_34, ui->pushButton_26, ui->pushButton_21));
+
+    ui->pushButton_28->setUserData (0, new KeyboardGrid(ui->pushButton_21, ui->pushButton_1, ui->pushButton_34, ui->pushButton_29));
+    ui->pushButton_29->setUserData (0, new KeyboardGrid(ui->pushButton_22, ui->pushButton_2, ui->pushButton_28, ui->pushButton_30));
+    ui->pushButton_30->setUserData (0, new KeyboardGrid(ui->pushButton_23, ui->pushButton_3, ui->pushButton_29, ui->pushButton_31));
+    ui->pushButton_31->setUserData (0, new KeyboardGrid(ui->pushButton_24, ui->pushButton_4, ui->pushButton_30, ui->pushButton_32));
+    ui->pushButton_32->setUserData (0, new KeyboardGrid(ui->pushButton_25, ui->pushButton_5, ui->pushButton_31, ui->pushButton_33));
+    ui->pushButton_33->setUserData (0, new KeyboardGrid(ui->pushButton_26, ui->pushButton_6, ui->pushButton_32, ui->pushButton_34));
+    ui->pushButton_34->setUserData (0, new KeyboardGrid(ui->pushButton_27, ui->pushButton_7, ui->pushButton_33, ui->pushButton_28));
+}
+
+void VKeyboard::grid_rule(QObject *obj, int keyType)
+{
+    KeyboardGrid *kg = (KeyboardGrid*)(obj->userData (0));
+    if(kg && keyType >= Qt::Key_Left && keyType <= Qt::Key_Down)
     {
-        if(th < 11)
+        int order = keyType - Qt::Key_Left;
+        QPushButton *pb = kg->udlr[order];
+        int count = 0;//防止无限循环
+        while(kg && pb && count < 34)
         {
-            if(th < 8)
-                col = 7;
-            else
+            if(pb->isEnabled ())
             {
-//                isNext = true;
-                col = th;
+                pb->setFocus ();
+                break;
             }
-        }
-        else if(th > 27)
-            col = 7;
-    }
-    else if(keyType == Qt::Key_Down)
-    {
-        if(th > 17 && th < 21)
-        {
-//            ;
-            isNext = true;
-            col = 7 + (20 - th);
-        }
-        else
-        {
-            isNext = true;
-            if(th > 20)
-                col = 7;
+            kg = (KeyboardGrid*)(pb->userData (0));
+            if(kg)
+                pb = kg->udlr[order];
+            count ++;
         }
     }
-    else if(keyType == Qt::Key_Left)
-    {
-        if(th == 1 || th == 11)
-        {
-            col = 9;
-            isNext = true;
-        }
-        else if(th == 21 || th == 28)
-        {
-            col = 6;
-            isNext = true;
-        }
-        else
-            col = 1;
-    }
-    else if(keyType == Qt::Key_Right)
-    {
-        if(th == 10 || th == 20)
-            col = 9;
-        else if(th == 27 || th == 34)
-            col = 6;
-        else
-        {
-            col = 1;
-            isNext = true;
-        }
-    }
-    //
-    for(int i = 0; i < col; i++)
-        focusNextPrevChild (isNext);
 }
 
 bool VKeyboard::clicked_rule(QPushButton *pb)
 {
-    mte->append (pb->text ());
+    if(pb == ui->pushButton_20)//空格
+    {
+        textEdit->insertPlainText (" ");
+    }
+    else if(pb == ui->pushButton_28)//换行
+    {
+        textEdit->insertPlainText ("\n");
+    }
+    else if(pb == ui->pushButton_29)//数字
+    {
+        ;
+    }
+    else if(pb == ui->pushButton_30)//字母
+    {
+        ;
+    }
+    else if(pb == ui->pushButton_31)//拼音
+    {
+        ;
+    }
+    else if(pb == ui->pushButton_32)//符号
+    {
+        ;
+    }
+    else if(pb == ui->pushButton_33)//保存结束
+    {
+        close ();
+    }
+    else if(pb == ui->pushButton_34)//取消返回
+    {
+        close ();
+    }
+    else
+        textEdit->insertPlainText (pb->text ());
+    textEdit->ensureCursorVisible();
     return false;
 }
 
@@ -163,12 +238,18 @@ bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
                 case Qt::Key_Down:
                 case Qt::Key_Left:
                 case Qt::Key_Right:
-                    jump_rule(obj->objectName ().mid (11).toInt (), keyEvent->key());
+                    grid_rule(obj, keyEvent->key());
                     break;
-                case Qt::Key_Z:
-                    close ();
+                case Qt::Key_Equal://左移
+                    textEdit->moveCursor (QTextCursor::Left);
                     break;
-                case Qt::Key_C:
+                case Qt::Key_Minus://右移
+                    textEdit->moveCursor (QTextCursor::Right);
+                    break;
+                case Qt::Key_Z://删除
+                    textEdit->textCursor ().deletePreviousChar();
+                    break;
+                case Qt::Key_C://
                     exit(0);
                     break;
                 case Qt::Key_Space:

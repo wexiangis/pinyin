@@ -4,10 +4,11 @@
 #include "vkeyboard.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
+    QMainWindow(parent, Qt::FramelessWindowHint),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setGeometry (0, 0, this->width (), this->height ());
     ui->toolButton->installEventFilter (this);
 }
 

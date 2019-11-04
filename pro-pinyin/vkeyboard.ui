@@ -19,7 +19,7 @@
      <x>0</x>
      <y>0</y>
      <width>480</width>
-     <height>51</height>
+     <height>60</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -29,6 +29,12 @@
     <property name="sizeConstraint">
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
     <item>
      <widget class="QWidget" name="widget_candidate" native="true">
       <property name="minimumSize">
@@ -37,92 +43,128 @@
         <height>24</height>
        </size>
       </property>
-      <widget class="QWidget" name="layoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>480</width>
-         <height>24</height>
-        </rect>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>5</number>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="spacing">
-         <number>10</number>
-        </property>
-        <property name="leftMargin">
-         <number>5</number>
-        </property>
-        <property name="rightMargin">
-         <number>5</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(114, 159, 207);</string>
-          </property>
-          <property name="text">
-           <string>到达</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>到</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>道</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>导</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>刀</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>岛</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>叨</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>导</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>岛</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(114, 159, 207);</string>
+         </property>
+         <property name="text">
+          <string>到达</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>道</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>刀</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>到</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>叨</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -131,9 +173,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>48</y>
+     <y>60</y>
      <width>482</width>
-     <height>226</height>
+     <height>214</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -145,8 +187,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>s</string>
@@ -158,8 +205,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>e</string>
@@ -171,8 +223,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>x</string>
@@ -184,11 +241,20 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>保存</string>
+       <string>取消
+返回</string>
+      </property>
+      <property name="default">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -197,11 +263,19 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>符号</string>
+      </property>
+      <property name="default">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -210,11 +284,19 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>大写</string>
+       <string>字母</string>
+      </property>
+      <property name="default">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -223,8 +305,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>w</string>
@@ -236,8 +323,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="styleSheet">
        <string notr="true"/>
@@ -252,8 +344,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>r</string>
@@ -265,8 +362,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>f</string>
@@ -278,8 +380,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>n</string>
@@ -291,8 +398,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>l</string>
@@ -304,8 +416,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>d</string>
@@ -317,8 +434,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>k</string>
@@ -330,8 +452,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>y</string>
@@ -343,8 +470,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>i</string>
@@ -356,11 +488,19 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>数字</string>
+       <string>拼音</string>
+      </property>
+      <property name="default">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -369,8 +509,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>v</string>
@@ -382,8 +527,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>p</string>
@@ -395,11 +545,20 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>返回</string>
+       <string>保存
+结束</string>
+      </property>
+      <property name="default">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -408,8 +567,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>m</string>
@@ -421,8 +585,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>a</string>
@@ -434,8 +603,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>z</string>
@@ -447,11 +621,16 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>翻页</string>
+       <string>空格</string>
       </property>
      </widget>
     </item>
@@ -460,8 +639,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>j</string>
@@ -473,8 +657,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>t</string>
@@ -486,8 +675,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>u</string>
@@ -499,8 +693,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>h</string>
@@ -512,8 +711,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>o</string>
@@ -525,8 +729,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>b</string>
@@ -538,8 +747,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>c</string>
@@ -551,8 +765,13 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>g</string>
@@ -564,11 +783,19 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>拼音</string>
+       <string>换行</string>
+      </property>
+      <property name="default">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -577,11 +804,28 @@
       <property name="minimumSize">
        <size>
         <width>48</width>
-        <height>56</height>
+        <height>53</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>小写</string>
+       <string>数字</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="autoDefault">
+       <bool>false</bool>
+      </property>
+      <property name="default">
+       <bool>false</bool>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -591,15 +835,15 @@
    <property name="geometry">
     <rect>
      <x>336</x>
-     <y>160</y>
+     <y>166</y>
      <width>144</width>
-     <height>112</height>
+     <height>106</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
      <width>144</width>
-     <height>112</height>
+     <height>106</height>
     </size>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -725,10 +969,10 @@ padding:2px 4px;</string>
        <number>1</number>
       </property>
       <property name="leftMargin">
-       <number>18</number>
+       <number>15</number>
       </property>
       <property name="rightMargin">
-       <number>18</number>
+       <number>15</number>
       </property>
       <item>
        <widget class="QLabel" name="label_tips_ent">
@@ -754,7 +998,7 @@ padding:2px 4px;</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_tips_ret">
+       <widget class="QLabel" name="label_tips_del">
         <property name="font">
          <font>
           <pointsize>9</pointsize>
@@ -769,7 +1013,7 @@ padding:2px 4px;</string>
          <enum>QFrame::Box</enum>
         </property>
         <property name="text">
-         <string>返回</string>
+         <string>删除</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
