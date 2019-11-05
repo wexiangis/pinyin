@@ -28,6 +28,8 @@ void MyTextEdit::startCursor(void)
 
 VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
     QWidget(parent, Qt::FramelessWindowHint),
+    useSpace(space),
+    useMultiLine(multiLine),
     ui(new Ui::VKeyboard)
 {
     ui->setupUi(this);
@@ -68,6 +70,7 @@ VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
     qDebug() << list.length()  << endl;
     foreach (QObject *obj, list)
     {
+//        qDebug() << obj->objectName ();
         if(obj->objectName ().indexOf("pushButton") == 0)
             obj->installEventFilter (this);
     }
@@ -92,13 +95,18 @@ VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
         {
             ;
         }
-        //空格键
-        ui->pushButton_20->setEnabled (space);
-        //回车键
-        ui->pushButton_28->setEnabled (multiLine);
     }
+    else
+    {
+        useSpace = true;
+        useMultiLine = true;
+    }
+    //空格键
+    ui->pushButton_20->setEnabled (useSpace);
+    //回车键
+    ui->pushButton_28->setEnabled (useMultiLine);
     //网格跳转属性初始化
-    keyboard_grid_init();
+    grid_link();
     //
     ui->widget_candidate->hide ();
 }
@@ -121,7 +129,7 @@ VKeyboard::~VKeyboard()
     delete ui;
 }
 
-void VKeyboard::keyboard_grid_init()
+void VKeyboard::grid_link()
 {
     ui->pushButton_1->setUserData (0, new KeyboardGrid(ui->pushButton_28, ui->pushButton_11, ui->pushButton_10, ui->pushButton_2));
     ui->pushButton_2->setUserData (0, new KeyboardGrid(ui->pushButton_29, ui->pushButton_12, ui->pushButton_1, ui->pushButton_3));
@@ -162,7 +170,58 @@ void VKeyboard::keyboard_grid_init()
     ui->pushButton_34->setUserData (0, new KeyboardGrid(ui->pushButton_27, ui->pushButton_7, ui->pushButton_33, ui->pushButton_28));
 }
 
-void VKeyboard::grid_rule(QObject *obj, int keyType)
+void VKeyboard::grid_load(KB_TYPE type)
+{
+    QString tarString;
+    switch(type)
+    {
+        case NUMBER:
+            tarString = kb_number;
+            break;
+        case PINTING:
+        case LOWER:
+            tarString = kb_lower;
+            break;
+        case CAPITAL:
+            tarString = kb_capital;
+            break;
+        case SYMBOL:
+            tarString = kb_symbol;
+            break;
+        default:
+            return;
+    }
+    QPushButton *pb;
+    QObjectList list = ui->gridLayoutWidget->children() ;
+    int count = 0;
+    foreach (QObject *obj, list)
+    {
+        if(obj->objectName ().indexOf("pushButton") == 0)
+        {
+//            qDebug() << obj->objectName ();
+            pb = (QPushButton*)obj;
+            if(count < tarString.size ())
+            {
+                pb->setText (tarString.at (count));
+                pb->setEnabled (true);
+            }
+            else
+            {
+                pb->setText ("");
+                pb->setEnabled (false);
+            }
+            count++;
+            if(count > 25)
+                break;
+        }
+    }
+    ui->pushButton_20->setText ("空格");
+    ui->pushButton_20->setEnabled (useSpace);
+    ui->pushButton_28->setText ("换行");
+    ui->pushButton_28->setEnabled (useMultiLine);
+}
+
+void VKeyboard::grid_jump(QObject *obj, int keyType)
 {
     KeyboardGrid *kg = (KeyboardGrid*)(obj->userData (0));
     if(kg && keyType >= Qt::Key_Left && keyType <= Qt::Key_Down)
@@ -187,29 +246,32 @@ void VKeyboard::grid_rule(QObject *obj, int keyType)
 
 bool VKeyboard::clicked_rule(QPushButton *pb)
 {
-    if(pb == ui->pushButton_20)//空格
+    if(pb == ui->pushButton_20 && ui->pushButton_20->text().size ()> 1)//空格
     {
         textEdit->insertPlainText (" ");
     }
-    else if(pb == ui->pushButton_28)//换行
+    else if(pb == ui->pushButton_28 && ui->pushButton_28->text().size () > 1)//换行
     {
         textEdit->insertPlainText ("\n");
     }
     else if(pb == ui->pushButton_29)//数字
     {
-        ;
+        grid_load(NUMBER);
     }
     else if(pb == ui->pushButton_30)//字母
     {
-        ;
+        if(ui->pushButton_1->text () != "q" && ui->pushButton_27->text() != "z")
+            grid_load(LOWER);
+        else
+            grid_load(CAPITAL);
     }
     else if(pb == ui->pushButton_31)//拼音
     {
-        ;
+        grid_load(LOWER);
     }
     else if(pb == ui->pushButton_32)//符号
     {
-        ;
+        grid_load(SYMBOL);
     }
     else if(pb == ui->pushButton_33)//保存结束
     {
@@ -238,7 +300,7 @@ bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
                 case Qt::Key_Down:
                 case Qt::Key_Left:
                 case Qt::Key_Right:
-                    grid_rule(obj, keyEvent->key());
+                    grid_jump(obj, keyEvent->key());
                     break;
                 case Qt::Key_Equal://左移
                     textEdit->moveCursor (QTextCursor::Left);

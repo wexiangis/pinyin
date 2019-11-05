@@ -43,20 +43,24 @@ public:
     explicit VKeyboard(int type = ANY, bool space = false, bool multiLine = false, QWidget *parent = 0);
     ~VKeyboard();
 
-    void grid_rule(QObject *obj, int keyType);
-    bool clicked_rule(QPushButton *pb);
-    bool eventFilter (QObject *obj, QEvent *event);
-
 protected:
-    void keyboard_grid_init();
+    void grid_link();
+    void grid_load(KB_TYPE type);
+    void grid_jump(QObject *obj, int keyType);
+    bool clicked_rule(QPushButton *pb);
+
+    bool eventFilter (QObject *obj, QEvent *event);
 
 private:
     Ui::VKeyboard *ui;
-    MyTextEdit *textEdit = NULL;
-    const QString number = "1234567890";
-    const QString lower = "qwertyuiopasdfghjklzxcvbnm";
-    const QString capital = "QWERTYUIOPASDFGHJKLZXCVBNM";
-    const QString symbol = "";
+    MyTextEdit *textEdit;
+    bool useSpace;
+    bool useMultiLine;
+
+    const QString kb_number = "1234567890";
+    const QString kb_lower = "qwertyuiopasdfghjklzxcvbnm";
+    const QString kb_capital = "QWERTYUIOPASDFGHJKLZXCVBNM";
+    const QString kb_symbol = "+-*/=:\";',()[]{}<>~!?._@#%\\|";
 };
 
 
