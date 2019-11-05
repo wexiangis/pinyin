@@ -20,7 +20,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_toolButton_clicked()
 {
-    VKeyboard *vk = new VKeyboard();
+    VKeyboard *vk = new VKeyboard(VKeyboard::LOWER|VKeyboard::PINYIN);
     vk->show ();
 }
 

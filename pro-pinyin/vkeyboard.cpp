@@ -28,6 +28,7 @@ void MyTextEdit::startCursor(void)
 
 VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
     QWidget(parent, Qt::FramelessWindowHint),
+    kb_type(type),
     useSpace(space),
     useMultiLine(multiLine),
     ui(new Ui::VKeyboard)
@@ -67,7 +68,7 @@ VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
 
     //遍历控件,连接到eventFilter()
     QObjectList list = ui->gridLayoutWidget->children() ;
-    qDebug() << list.length()  << endl;
+//    qDebug() << list.length()  << endl;
     foreach (QObject *obj, list)
     {
 //        qDebug() << obj->objectName ();
@@ -87,13 +88,37 @@ VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
     //输入字符范围限制
     if(type != ANY)
     {
-        if(type > 0x20)
+        //底部栏按键使能选择
+        if((type&LOWER) == 0 && (type&CAPITAL) == 0)
+            ui->pushButton_30->setEnabled (false);
+        if((type&NUMBER) == 0)
+            ui->pushButton_29->setEnabled (false);
+        if((type&PINYIN) == 0)
+            ui->pushButton_31->setEnabled (false);
+        if((type&SYMBOL) == 0)
+            ui->pushButton_32->setEnabled (false);
+        //默认键盘选择
+        if(!(type&LOWER) && (type&CAPITAL))
         {
-            ;
+            grid_load(CAPITAL);
+            ui->pushButton_30->setText ("-ABC-");
         }
-        else
+        else if((type&LOWER) && !(type&CAPITAL))
         {
-            ;
+            grid_load(LOWER);
+            ui->pushButton_30->setText ("-abc-");
+        }
+        else if((type&NUMBER))
+        {
+            grid_load(NUMBER);
+        }
+        else if((type&PINYIN))
+        {
+            grid_load(PINYIN);
+        }
+        else if((type&SYMBOL))
+        {
+            grid_load(SYMBOL);
         }
     }
     else
@@ -178,7 +203,7 @@ void VKeyboard::grid_load(KB_TYPE type)
         case NUMBER:
             tarString = kb_number;
             break;
-        case PINTING:
+        case PINYIN:
         case LOWER:
             tarString = kb_lower;
             break;
@@ -215,9 +240,9 @@ void VKeyboard::grid_load(KB_TYPE type)
                 break;
         }
     }
-    ui->pushButton_20->setText ("空格");
+    ui->pushButton_20->setText ("Space");
     ui->pushButton_20->setEnabled (useSpace);
-    ui->pushButton_28->setText ("换行");
+    ui->pushButton_28->setText ("Enter");
     ui->pushButton_28->setEnabled (useMultiLine);
 }
 
@@ -260,10 +285,29 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     }
     else if(pb == ui->pushButton_30)//字母
     {
-        if(ui->pushButton_1->text () != "q" && ui->pushButton_27->text() != "z")
+        if(ui->pushButton_30->text () == "abc")
+        {
             grid_load(LOWER);
-        else
+            ui->pushButton_30->setText ("ABC");
+        }
+        else if(ui->pushButton_30->text () == "ABC")
+        {
             grid_load(CAPITAL);
+            ui->pushButton_30->setText ("abc");
+        }
+        else
+        {
+            if((kb_type&CAPITAL))
+            {
+                grid_load(CAPITAL);
+                ui->pushButton_30->setText ("-ABC-");
+            }
+            else// if((kb_type&LOWER))
+            {
+                grid_load(LOWER);
+                ui->pushButton_30->setText ("-abc-");
+            }
+        }
     }
     else if(pb == ui->pushButton_31)//拼音
     {

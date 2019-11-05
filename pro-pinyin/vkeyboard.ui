@@ -679,7 +679,7 @@
        </font>
       </property>
       <property name="text">
-       <string>空格</string>
+       <string>Space</string>
       </property>
       <property name="default">
        <bool>false</bool>
@@ -700,7 +700,7 @@
        </font>
       </property>
       <property name="text">
-       <string>换行</string>
+       <string>Enter</string>
       </property>
      </widget>
     </item>
@@ -718,7 +718,7 @@
        </font>
       </property>
       <property name="text">
-       <string>数字</string>
+       <string>123</string>
       </property>
      </widget>
     </item>
@@ -736,7 +736,7 @@
        </font>
       </property>
       <property name="text">
-       <string>字母</string>
+       <string>ABC</string>
       </property>
      </widget>
     </item>
@@ -772,8 +772,7 @@
        </font>
       </property>
       <property name="text">
-       <string>特殊
-符号</string>
+       <string>!?@</string>
       </property>
      </widget>
     </item>

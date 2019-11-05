@@ -30,14 +30,8 @@ public:
         NUMBER = 0x01,
         LOWER = 0x02,
         CAPITAL = 0x04,
-        PINTING = 0x08,
+        PINYIN = 0x08,
         SYMBOL = 0x10,
-        //以下项不可叠加使用
-        IP = 0x21,
-        URL = 0x22,
-        USERNAME = 0x23,
-        PASSWORD = 0x24,
-        FILENAME = 0x25,
     };
 
     explicit VKeyboard(int type = ANY, bool space = false, bool multiLine = false, QWidget *parent = 0);
@@ -56,6 +50,7 @@ private:
     MyTextEdit *textEdit;
     bool useSpace;
     bool useMultiLine;
+    int kb_type;
 
     const QString kb_number = "1234567890";
     const QString kb_lower = "qwertyuiopasdfghjklzxcvbnm";
