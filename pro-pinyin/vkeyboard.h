@@ -34,7 +34,7 @@ public:
         SYMBOL = 0x10,
     };
 
-    explicit VKeyboard(int type = ANY, bool space = false, bool multiLine = false, QWidget *parent = 0);
+    VKeyboard(QString *value = NULL, int type = ANY, bool space = false, bool multiLine = false, QWidget *parent = 0);
     ~VKeyboard();
 
 protected:
@@ -54,7 +54,7 @@ private:
     bool useSpace;
     bool useMultiLine;
     int kb_type;
-
+    QString *targetString;
     const QString kb_number = "1234567890";
     const QString kb_lower = "qwertyuiopasdfghjklzxcvbnm";
     const QString kb_capital = "QWERTYUIOPASDFGHJKLZXCVBNM";

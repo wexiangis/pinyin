@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "vkeyboard.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent, Qt::FramelessWindowHint),
@@ -58,42 +59,36 @@ bool MainWindow::eventFilter (QObject *obj, QEvent *event)
 
 void MainWindow::on_pushButton_number_clicked()
 {
-    VKeyboard *vk = new VKeyboard(VKeyboard::NUMBER);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::NUMBER);
     vk->show ();
 }
-
 void MainWindow::on_pushButton_low_clicked()
 {
-    VKeyboard *vk = new VKeyboard(VKeyboard::LOWER);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::LOWER);
     vk->show ();
 }
-
 void MainWindow::on_pushButton_capital_clicked()
 {
-    VKeyboard *vk = new VKeyboard(VKeyboard::CAPITAL);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::CAPITAL);
     vk->show ();
 }
-
 void MainWindow::on_pushButton_word_clicked()
 {
-    VKeyboard *vk = new VKeyboard(VKeyboard::LOWER|VKeyboard::CAPITAL);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::LOWER|VKeyboard::CAPITAL);
     vk->show ();
 }
-
 void MainWindow::on_pushButton_pinyin_clicked()
 {
-    VKeyboard *vk = new VKeyboard(VKeyboard::PINYIN);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::PINYIN);
     vk->show ();
 }
-
 void MainWindow::on_pushButton_symbol_clicked()
 {
-    VKeyboard *vk = new VKeyboard(VKeyboard::SYMBOL);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::SYMBOL);
     vk->show ();
 }
-
 void MainWindow::on_pushButton_all_clicked()
 {
-    VKeyboard *vk = new VKeyboard(VKeyboard::ANY);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::ANY);
     vk->show ();
 }

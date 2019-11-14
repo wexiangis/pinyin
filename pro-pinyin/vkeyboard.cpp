@@ -59,8 +59,9 @@ void google_pinyin_test()
     im_close_decoder();
 }
 
-VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
+VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidget *parent) :
     QWidget(parent, Qt::FramelessWindowHint),
+    targetString(value),
     kb_type(type),
     useSpace(space),
     useMultiLine(multiLine),
@@ -68,26 +69,13 @@ VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
 {
     ui->setupUi(this);
     this->setGeometry (0, 0, this->width (), this->height ());
-
     //遍历控件,连接到eventFilter()
     QObjectList list = ui->gridLayoutWidget->children() ;
-//    qDebug() << list.length()  << endl;
     foreach (QObject *obj, list)
     {
-//        qDebug() << obj->objectName ();
         if(obj->objectName ().indexOf("pushButton") == 0)
             obj->installEventFilter (this);
     }
-    //光标闪烁的输入行
-    textEdit = new MyTextEdit();
-    textEdit->setPlainText ("白日依山尽");
-    textEdit->setFocusPolicy (Qt::NoFocus);
-    textEdit->setLineWrapMode (QTextEdit::NoWrap);
-    textEdit->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
-    textEdit->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
-    ui->verticalLayout->insertWidget (0, textEdit);
-    textEdit->startCursor();
-    textEdit->moveCursor (QTextCursor::EndOfLine);
     //鼠标回调
     foreach (QObject *obj, ui->gridLayoutWidget->children())
     {
@@ -98,6 +86,7 @@ VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
         }
     }
     //输入字符范围限制
+    ui->widget_candidate->hide ();
     if(type != ANY)
     {
         //底部栏按键使能选择
@@ -127,6 +116,7 @@ VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
         else if((type&PINYIN))
         {
             grid_load(PINYIN);
+            ui->widget_candidate->show ();
         }
         else if((type&SYMBOL))
         {
@@ -144,8 +134,16 @@ VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
     ui->pushButton_28->setEnabled (useMultiLine);
     //网格跳转属性初始化
     grid_link();
-    //
-    ui->widget_candidate->hide ();
+    //光标闪烁的输入行
+    textEdit = new MyTextEdit();
+    textEdit->setPlainText ("白日依山尽");
+    textEdit->setFocusPolicy (Qt::NoFocus);
+    textEdit->setLineWrapMode (QTextEdit::NoWrap);
+    textEdit->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+    textEdit->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+    ui->verticalLayout->insertWidget (0, textEdit);
+    textEdit->startCursor();
+    textEdit->moveCursor (QTextCursor::EndOfLine);
 }
 
 VKeyboard::~VKeyboard()
@@ -298,6 +296,7 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     else if(pb == ui->pushButton_29)//数字
     {
         grid_load(NUMBER);
+        ui->widget_candidate->hide ();
     }
     else if(pb == ui->pushButton_30)//字母
     {
@@ -324,17 +323,25 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
                 ui->pushButton_30->setText ("-abc-");
             }
         }
+        ui->widget_candidate->hide ();
     }
     else if(pb == ui->pushButton_31)//拼音
     {
         grid_load(LOWER);
+        ui->widget_candidate->show ();
     }
     else if(pb == ui->pushButton_32)//符号
     {
         grid_load(SYMBOL);
+        ui->widget_candidate->hide ();
     }
     else if(pb == ui->pushButton_33)//保存结束
     {
+        if(targetString)
+        {
+            *targetString = textEdit->toPlainText ();
+            qDebug() << *targetString;
+        }
         close ();
     }
     else if(pb == ui->pushButton_34)//取消返回
@@ -343,8 +350,10 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     }
     else if(pb)
         textEdit->insertPlainText (pb->text ());
+    else
+        return false;
     textEdit->ensureCursorVisible();
-    return false;
+    return true;
 }
 
 bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
