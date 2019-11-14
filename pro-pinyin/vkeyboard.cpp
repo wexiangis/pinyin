@@ -26,6 +26,39 @@ void MyTextEdit::startCursor(void)
     focusInEvent (&fe);
 }
 
+void google_pinyin_test()
+{
+    //---------- 拼音接口 ---------
+    if(!im_open_decoder((const char *)"./dict_pinyin.dat", (const char *)"./dict_pinyin_user.dat"))
+        qDebug() << "im_open_decoder: err!";
+    //设置输入输出上限
+    //max_sps_len: 输入拼音字母的最大长度
+    //max_hzs_len: 解码中文字符的最大长度
+    im_set_max_lens(16, 16);
+    //清除缓冲
+    im_flush_cache();
+    //
+    im_reset_search();
+    //
+    int search_res =  im_search((const char*)"zhonghaida", 10);
+    qDebug() << "search_res: " << search_res;
+
+    //对当前查找结果执行删除操作， 然后再重新查找
+    //pos: 拼音字母的位置或者是搜索结果ID
+    //is_pos_in_splid: 申明pos参数是字母位置还是搜索结果ID
+    //clear_fixed_this_step:
+    //返回候选数量
+    //size_t im_delsearch(size_t pos, bool is_pos_in_splid, bool clear_fixed_this_step);
+
+    for(int i = 0; i < search_res; i++)
+    {
+        char16 cand_str[64] = {0};
+        if(im_get_candidate(i, cand_str, 64))
+            qDebug() << "find: " << QString::fromUtf16 (cand_str);
+    }
+    im_close_decoder();
+}
+
 VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
     QWidget(parent, Qt::FramelessWindowHint),
     kb_type(type),
@@ -35,36 +68,6 @@ VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
 {
     ui->setupUi(this);
     this->setGeometry (0, 0, this->width (), this->height ());
-
-    //---------- 拼音接口 ---------
-//    if(!im_open_decoder((const char *)"./dict_pinyin.dat", (const char *)"./dict_pinyin_user.dat"))
-//        qDebug() << "im_open_decoder: err!";
-//    //设置输入输出上限
-//    //max_sps_len: 输入拼音字母的最大长度
-//    //max_hzs_len: 解码中文字符的最大长度
-//    im_set_max_lens(16, 16);
-//    //清除缓冲
-//    im_flush_cache();
-//    //
-//    im_reset_search();
-//    //
-//    int search_res =  im_search((const char*)"zhonghaida", 10);
-//    qDebug() << "search_res: " << search_res;
-
-//    //对当前查找结果执行删除操作， 然后再重新查找
-//    //pos: 拼音字母的位置或者是搜索结果ID
-//    //is_pos_in_splid: 申明pos参数是字母位置还是搜索结果ID
-//    //clear_fixed_this_step:
-//    //返回候选数量
-//    //size_t im_delsearch(size_t pos, bool is_pos_in_splid, bool clear_fixed_this_step);
-
-//    for(int i = 0; i < search_res; i++)
-//    {
-//        char16 cand_str[64] = {0};
-//        if(im_get_candidate(i, cand_str, 64))
-//            qDebug() << "find: " << QString::fromUtf16 (cand_str);
-//    }
-//    im_close_decoder();
 
     //遍历控件,连接到eventFilter()
     QObjectList list = ui->gridLayoutWidget->children() ;
@@ -85,6 +88,15 @@ VKeyboard::VKeyboard(int type, bool space, bool multiLine, QWidget *parent) :
     ui->verticalLayout->insertWidget (0, textEdit);
     textEdit->startCursor();
     textEdit->moveCursor (QTextCursor::EndOfLine);
+    //鼠标回调
+    foreach (QObject *obj, ui->gridLayoutWidget->children())
+    {
+        if(obj->objectName ().indexOf("pushButton") == 0)
+        {
+            QPushButton *pb = (QPushButton*)obj;
+            connect(pb, SIGNAL(clicked(bool)), this, SLOT(on_pushButton_clicked(bool)));
+        }
+    }
     //输入字符范围限制
     if(type != ANY)
     {
@@ -217,9 +229,8 @@ void VKeyboard::grid_load(KB_TYPE type)
             return;
     }
     QPushButton *pb;
-    QObjectList list = ui->gridLayoutWidget->children() ;
     int count = 0;
-    foreach (QObject *obj, list)
+    foreach (QObject *obj, ui->gridLayoutWidget->children())
     {
         if(obj->objectName ().indexOf("pushButton") == 0)
         {
@@ -267,6 +278,11 @@ void VKeyboard::grid_jump(QObject *obj, int keyType)
             count ++;
         }
     }
+}
+
+void VKeyboard::on_pushButton_clicked(bool c)
+{
+    clicked_rule((QPushButton*)QApplication::focusWidget());
 }
 
 bool VKeyboard::clicked_rule(QPushButton *pb)
@@ -325,7 +341,7 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     {
         close ();
     }
-    else
+    else if(pb)
         textEdit->insertPlainText (pb->text ());
     textEdit->ensureCursorVisible();
     return false;
@@ -377,4 +393,3 @@ bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
     }
     return QWidget::eventFilter(obj, event);
 }
-

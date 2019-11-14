@@ -45,6 +45,9 @@ protected:
 
     bool eventFilter (QObject *obj, QEvent *event);
 
+private slots:
+    void on_pushButton_clicked(bool c);
+
 private:
     Ui::VKeyboard *ui;
     MyTextEdit *textEdit;
