@@ -86,7 +86,7 @@ VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidg
         }
     }
     //输入字符范围限制
-    ui->widget_candidate->hide ();
+    ui->listWidget->hide ();
     if(type != ANY)
     {
         //底部栏按键使能选择
@@ -116,7 +116,7 @@ VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidg
         else if((type&PINYIN))
         {
             grid_load(PINYIN);
-            ui->widget_candidate->show ();
+            ui->listWidget->show ();
         }
         else if((type&SYMBOL))
         {
@@ -296,7 +296,7 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     else if(pb == ui->pushButton_29)//数字
     {
         grid_load(NUMBER);
-        ui->widget_candidate->hide ();
+        ui->listWidget->hide ();
     }
     else if(pb == ui->pushButton_30)//字母
     {
@@ -323,17 +323,25 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
                 ui->pushButton_30->setText ("-abc-");
             }
         }
-        ui->widget_candidate->hide ();
+        ui->listWidget->hide ();
     }
     else if(pb == ui->pushButton_31)//拼音
     {
         grid_load(LOWER);
-        ui->widget_candidate->show ();
+        ui->listWidget->clear ();
+        ui->listWidget->show ();
+        ui->listWidget->addItem ("到");
+        ui->listWidget->addItem ("导");
+        ui->listWidget->addItem ("倒");
+        ui->listWidget->addItem ("道");
+        ui->listWidget->addItem ("刀");
+        if(ui->listWidget->count() > 0)
+                ui->listWidget->setCurrentRow(0);
     }
     else if(pb == ui->pushButton_32)//符号
     {
         grid_load(SYMBOL);
-        ui->widget_candidate->hide ();
+        ui->listWidget->hide ();
     }
     else if(pb == ui->pushButton_33)//保存结束
     {
@@ -349,7 +357,9 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
         close ();
     }
     else if(pb)
+    {
         textEdit->insertPlainText (pb->text ());
+    }
     else
         return false;
     textEdit->ensureCursorVisible();
@@ -372,13 +382,33 @@ bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
                     grid_jump(obj, keyEvent->key());
                     break;
                 case Qt::Key_Equal://左移
-                    textEdit->moveCursor (QTextCursor::Left);
+                    if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
+                    {
+                        int c = ui->listWidget->currentRow () - 1;
+                        if(c < 0)
+                            c = ui->listWidget->count () - 1;
+                        ui->listWidget->setCurrentRow (c);
+                    }
+                    else
+                        textEdit->moveCursor (QTextCursor::Left);
                     break;
                 case Qt::Key_Minus://右移
-                    textEdit->moveCursor (QTextCursor::Right);
+                    if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
+                    {
+                        int c = ui->listWidget->currentRow () + 1;
+                        if(c >= ui->listWidget->count ())
+                            c = 0;
+                        ui->listWidget->setCurrentRow (c);
+                    }
+                    else
+                        textEdit->moveCursor (QTextCursor::Right);
                     break;
                 case Qt::Key_Z://删除
                     textEdit->textCursor ().deletePreviousChar();
+                    break;
+                case Qt::Key_P://确认
+                    if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
+                        textEdit->insertPlainText (ui->listWidget->currentItem ()->text ());
                     break;
                 case Qt::Key_C://
                     exit(0);
