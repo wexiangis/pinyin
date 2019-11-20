@@ -34,7 +34,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QString result = "";
+    QString result = "白日依山尽";
 };
 
 #endif // MAINWINDOW_H

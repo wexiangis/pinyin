@@ -43,6 +43,15 @@ protected:
     void grid_jump(QObject *obj, int keyType);
     bool clicked_rule(QPushButton *pb);
 
+    void pinyin_input(QString str);
+    bool pinyin_delete(void);
+    void pinyin_clean(void);
+    void pinyin_show(void);
+    void pinyin_hide(void);
+    bool pinyin_isShow(void);
+    bool pinyin_move(bool isRight);
+    void pinyin_refreshList(void);
+
     bool eventFilter (QObject *obj, QEvent *event);
 
 private slots:
@@ -50,11 +59,13 @@ private slots:
 
 private:
     Ui::VKeyboard *ui;
-    MyTextEdit *textEdit;
-    bool useSpace;
-    bool useMultiLine;
-    int kb_type;
-    QString *targetString;
+    MyTextEdit textEdit;//光标常闪输入框
+    bool useSpace;//记录传参,是否启用空格
+    bool useMultiLine;//记录传参,是否启用回车
+    int kb_type;//记录传参,输入类型
+    QString *returnString;//返回写入
+    QString pinyinCandidate = "";//缓存拼音输入
+
     const QString kb_number = "1234567890";
     const QString kb_lower = "qwertyuiopasdfghjklzxcvbnm";
     const QString kb_capital = "QWERTYUIOPASDFGHJKLZXCVBNM";

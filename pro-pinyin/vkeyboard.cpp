@@ -4,6 +4,9 @@
 #include "pinyinime.h"
 #include <QDebug>
 
+QString argv_dictPath = "./dict/dict_pinyin.dat";
+QString argv_dictUserPath = "./dict/dict_pinyin_user.dat";
+
 //键盘上下左右跳转指针,放置到pushButton的userData中
 class KeyboardGrid : public QObjectUserData
 {
@@ -29,7 +32,8 @@ void MyTextEdit::startCursor(void)
 void google_pinyin_test()
 {
     //---------- 拼音接口 ---------
-    if(!im_open_decoder((const char *)"./dict_pinyin.dat", (const char *)"./dict_pinyin_user.dat"))
+    if(!im_open_decoder(argv_dictPath.toLocal8Bit ().data (), argv_dictUserPath.toLocal8Bit ().data ()))
+//    if(!im_open_decoder((const char *)"qrc:/dict/dict_pinyin.dat", (const char *)"qrc:/dict/dict_pinyin_user.dat"))
         qDebug() << "im_open_decoder: err!";
     //设置输入输出上限
     //max_sps_len: 输入拼音字母的最大长度
@@ -37,7 +41,7 @@ void google_pinyin_test()
     im_set_max_lens(16, 16);
     //清除缓冲
     im_flush_cache();
-    //
+    //重置
     im_reset_search();
     //
     int search_res =  im_search((const char*)"zhonghaida", 10);
@@ -59,9 +63,122 @@ void google_pinyin_test()
     im_close_decoder();
 }
 
+void VKeyboard::pinyin_refreshList(void)
+{
+    ui->listWidget->clear ();
+    if(pinyinCandidate.size () > 0)
+    {
+        int search_res =  im_search(pinyinCandidate.toLocal8Bit ().data (), pinyinCandidate.size ());
+        qDebug() << "im_search: " << search_res;
+        for(int i = 0; i < search_res; i++)
+        {
+            char16 cand_str[64] = {0};
+            if(im_get_candidate(i, cand_str, 64))
+                ui->listWidget->addItem (QString::fromUtf16 (cand_str));
+        }
+    }
+    if(ui->listWidget->count () > 0)
+        ui->listWidget->setCurrentRow (0);
+}
+
+void VKeyboard::pinyin_show(void)
+{
+    if(pinyin_isShow())
+        im_close_decoder();
+//    if(!pinyin_isShow())
+    {
+        if(!im_open_decoder(argv_dictPath.toLocal8Bit ().data (), argv_dictUserPath.toLocal8Bit ().data ()))
+            qDebug() << "im_open_decoder: err!";
+        else
+            qDebug() << "im_open_decoder: success";
+        //设置输入输出上限
+        //max_sps_len: 输入拼音字母的最大长度
+        //max_hzs_len: 解码中文字符的最大长度
+        im_set_max_lens(16, 16);
+        //清除缓冲
+        im_flush_cache();
+        //重置
+        im_reset_search();
+    }
+    ui->listWidget->show ();
+    ui->label_pinyin->show ();
+}
+
+void VKeyboard::pinyin_hide(void)
+{
+    if(pinyin_isShow())
+        im_close_decoder();
+    ui->listWidget->hide ();
+    ui->label_pinyin->hide ();
+}
+
+void VKeyboard::pinyin_input(QString str)
+{
+    pinyinCandidate.append (str);
+    ui->label_pinyin->setText (pinyinCandidate);
+    pinyin_refreshList();
+}
+
+bool VKeyboard::pinyin_delete(void)
+{
+    if(pinyinCandidate.size () > 0)
+    {
+        pinyinCandidate.remove (pinyinCandidate.size ()-1, 1);
+        ui->label_pinyin->setText (pinyinCandidate);
+        pinyin_refreshList();
+        return true;
+    }
+    return false;
+}
+
+void VKeyboard::pinyin_clean(void)
+{
+    ui->listWidget->clear ();
+    pinyinCandidate = "";
+    ui->label_pinyin->setText (pinyinCandidate);
+//    if(pinyin_isShow())
+//    {
+//        //清除缓冲
+//        im_flush_cache();
+//        //重置
+//        im_reset_search();
+//    }
+}
+
+bool VKeyboard::pinyin_isShow(void)
+{
+    return !ui->listWidget->isHidden ();
+}
+
+bool VKeyboard::pinyin_move(bool isRight)
+{
+    if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
+    {
+        if(isRight)
+        {
+            int c = ui->listWidget->currentRow () + 1;
+            if(c >= ui->listWidget->count ())
+                c = 0;
+            ui->listWidget->setCurrentRow (c);
+        }
+        else
+        {
+            if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
+            {
+                int c = ui->listWidget->currentRow () - 1;
+                if(c < 0)
+                    c = ui->listWidget->count () - 1;
+                ui->listWidget->setCurrentRow (c);
+            }
+        }
+        return true;
+    }
+    return false;
+}
+
 VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidget *parent) :
     QWidget(parent, Qt::FramelessWindowHint),
-    targetString(value),
+    returnString(value),
     kb_type(type),
     useSpace(space),
     useMultiLine(multiLine),
@@ -86,7 +203,7 @@ VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidg
         }
     }
     //输入字符范围限制
-    ui->listWidget->hide ();
+    pinyin_hide ();
     if(type != ANY)
     {
         //底部栏按键使能选择
@@ -116,7 +233,8 @@ VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidg
         else if((type&PINYIN))
         {
             grid_load(PINYIN);
-            ui->listWidget->show ();
+            pinyin_clean();
+            pinyin_show ();
         }
         else if((type&SYMBOL))
         {
@@ -135,15 +253,15 @@ VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidg
     //网格跳转属性初始化
     grid_link();
     //光标闪烁的输入行
-    textEdit = new MyTextEdit();
-    textEdit->setPlainText ("白日依山尽");
-    textEdit->setFocusPolicy (Qt::NoFocus);
-    textEdit->setLineWrapMode (QTextEdit::NoWrap);
-    textEdit->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
-    textEdit->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
-    ui->verticalLayout->insertWidget (0, textEdit);
-    textEdit->startCursor();
-    textEdit->moveCursor (QTextCursor::EndOfLine);
+    if(returnString)
+        textEdit.setPlainText (*returnString);
+    textEdit.setFocusPolicy (Qt::NoFocus);
+    textEdit.setLineWrapMode (QTextEdit::NoWrap);
+    textEdit.setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+    textEdit.setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
+    ui->verticalLayout->insertWidget (0, &textEdit);
+    textEdit.startCursor();
+    textEdit.moveCursor (QTextCursor::End);
 }
 
 VKeyboard::~VKeyboard()
@@ -164,6 +282,7 @@ VKeyboard::~VKeyboard()
     delete ui;
 }
 
+//把每个按键的上下左右链接起来
 void VKeyboard::grid_link()
 {
     ui->pushButton_1->setUserData (0, new KeyboardGrid(ui->pushButton_28, ui->pushButton_11, ui->pushButton_10, ui->pushButton_2));
@@ -205,6 +324,7 @@ void VKeyboard::grid_link()
     ui->pushButton_34->setUserData (0, new KeyboardGrid(ui->pushButton_27, ui->pushButton_7, ui->pushButton_33, ui->pushButton_28));
 }
 
+//按输入类型加载键盘
 void VKeyboard::grid_load(KB_TYPE type)
 {
     QString tarString;
@@ -232,7 +352,6 @@ void VKeyboard::grid_load(KB_TYPE type)
     {
         if(obj->objectName ().indexOf("pushButton") == 0)
         {
-//            qDebug() << obj->objectName ();
             pb = (QPushButton*)obj;
             if(count < tarString.size ())
             {
@@ -255,6 +374,7 @@ void VKeyboard::grid_load(KB_TYPE type)
     ui->pushButton_28->setEnabled (useMultiLine);
 }
 
+//键盘上的焦点的跳转规则
 void VKeyboard::grid_jump(QObject *obj, int keyType)
 {
     KeyboardGrid *kg = (KeyboardGrid*)(obj->userData (0));
@@ -278,27 +398,33 @@ void VKeyboard::grid_jump(QObject *obj, int keyType)
     }
 }
 
+//鼠标点击键盘事件也转到clicked_rule()
 void VKeyboard::on_pushButton_clicked(bool c)
 {
     clicked_rule((QPushButton*)QApplication::focusWidget());
 }
 
+//每个按键的点击事件都归到这里统一管理
 bool VKeyboard::clicked_rule(QPushButton *pb)
 {
-    if(pb == ui->pushButton_20 && ui->pushButton_20->text().size ()> 1)//空格
+    //空格
+    if(pb == ui->pushButton_20 && ui->pushButton_20->text().size ()> 1)
     {
-        textEdit->insertPlainText (" ");
+        textEdit.insertPlainText (" ");
     }
-    else if(pb == ui->pushButton_28 && ui->pushButton_28->text().size () > 1)//换行
+    //换行
+    else if(pb == ui->pushButton_28 && ui->pushButton_28->text().size () > 1)
     {
-        textEdit->insertPlainText ("\n");
+        textEdit.insertPlainText ("\n");
     }
-    else if(pb == ui->pushButton_29)//数字
+    //数字
+    else if(pb == ui->pushButton_29)
     {
         grid_load(NUMBER);
-        ui->listWidget->hide ();
+        pinyin_hide ();
     }
-    else if(pb == ui->pushButton_30)//字母
+    //字母
+    else if(pb == ui->pushButton_30)
     {
         if(ui->pushButton_30->text () == "abc")
         {
@@ -317,52 +443,54 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
                 grid_load(CAPITAL);
                 ui->pushButton_30->setText ("-ABC-");
             }
-            else// if((kb_type&LOWER))
+            else
             {
                 grid_load(LOWER);
                 ui->pushButton_30->setText ("-abc-");
             }
         }
-        ui->listWidget->hide ();
+        pinyin_hide ();
     }
-    else if(pb == ui->pushButton_31)//拼音
+    //拼音
+    else if(pb == ui->pushButton_31)
     {
         grid_load(LOWER);
-        ui->listWidget->clear ();
-        ui->listWidget->show ();
-        ui->listWidget->addItem ("到");
-        ui->listWidget->addItem ("导");
-        ui->listWidget->addItem ("倒");
-        ui->listWidget->addItem ("道");
-        ui->listWidget->addItem ("刀");
-        if(ui->listWidget->count() > 0)
-                ui->listWidget->setCurrentRow(0);
+        pinyin_clean();
+        pinyin_show ();
     }
-    else if(pb == ui->pushButton_32)//符号
+    //符号
+    else if(pb == ui->pushButton_32)
     {
         grid_load(SYMBOL);
-        ui->listWidget->hide ();
+        pinyin_hide ();
     }
-    else if(pb == ui->pushButton_33)//保存结束
+    //保存结束
+    else if(pb == ui->pushButton_33)
     {
-        if(targetString)
+        if(returnString)
         {
-            *targetString = textEdit->toPlainText ();
-            qDebug() << *targetString;
+            *returnString = textEdit.toPlainText ();
+            qDebug() << *returnString;
         }
         close ();
     }
-    else if(pb == ui->pushButton_34)//取消返回
+    //取消返回
+    else if(pb == ui->pushButton_34)
     {
         close ();
     }
+    //键值输入
     else if(pb)
     {
-        textEdit->insertPlainText (pb->text ());
+        if(pinyin_isShow ())
+            pinyin_input (pb->text ());
+        else
+            textEdit.insertPlainText (pb->text ());
     }
     else
         return false;
-    textEdit->ensureCursorVisible();
+    //保持输入框光标
+    textEdit.ensureCursorVisible();
     return true;
 }
 
@@ -382,33 +510,23 @@ bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
                     grid_jump(obj, keyEvent->key());
                     break;
                 case Qt::Key_Equal://左移
-                    if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
-                    {
-                        int c = ui->listWidget->currentRow () - 1;
-                        if(c < 0)
-                            c = ui->listWidget->count () - 1;
-                        ui->listWidget->setCurrentRow (c);
-                    }
-                    else
-                        textEdit->moveCursor (QTextCursor::Left);
+                    if(!pinyin_move(false))
+                        textEdit.moveCursor (QTextCursor::Left);
                     break;
                 case Qt::Key_Minus://右移
-                    if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
-                    {
-                        int c = ui->listWidget->currentRow () + 1;
-                        if(c >= ui->listWidget->count ())
-                            c = 0;
-                        ui->listWidget->setCurrentRow (c);
-                    }
-                    else
-                        textEdit->moveCursor (QTextCursor::Right);
+                    if(!pinyin_move(true))
+                        textEdit.moveCursor (QTextCursor::Right);
                     break;
                 case Qt::Key_Z://删除
-                    textEdit->textCursor ().deletePreviousChar();
+                    if(!pinyin_delete ())
+                        textEdit.textCursor ().deletePreviousChar();
                     break;
                 case Qt::Key_P://确认
                     if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
-                        textEdit->insertPlainText (ui->listWidget->currentItem ()->text ());
+                    {
+                        textEdit.insertPlainText (ui->listWidget->currentItem ()->text ());
+                        pinyin_clean ();
+                    }
                     break;
                 case Qt::Key_C://
                     exit(0);
