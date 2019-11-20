@@ -76,6 +76,3 @@ HEADERS += \
 FORMS += \
     mainwindow.ui \
     vkeyboard.ui
-
-RESOURCES += \
-    pic.qrc

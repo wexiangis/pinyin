@@ -46,9 +46,9 @@ protected:
     void pinyin_input(QString str);
     bool pinyin_delete(void);
     void pinyin_clean(void);
-    void pinyin_show(void);
-    void pinyin_hide(void);
-    bool pinyin_isShow(void);
+    void pinyin_open(void);
+    void pinyin_close(void);
+    bool pinyin_isOpen(void);
     bool pinyin_move(bool isRight);
     void pinyin_refreshList(void);
 
@@ -65,6 +65,7 @@ private:
     int kb_type;//记录传参,输入类型
     QString *returnString;//返回写入
     QString pinyinCandidate = "";//缓存拼音输入
+    bool pinyin_run = false;//拼音输入法运行状态
 
     const QString kb_number = "1234567890";
     const QString kb_lower = "qwertyuiopasdfghjklzxcvbnm";

@@ -69,28 +69,46 @@ void VKeyboard::pinyin_refreshList(void)
     if(pinyinCandidate.size () > 0)
     {
         int search_res =  im_search(pinyinCandidate.toLocal8Bit ().data (), pinyinCandidate.size ());
-        qDebug() << "im_search: " << search_res;
         for(int i = 0; i < search_res; i++)
         {
             char16 cand_str[64] = {0};
             if(im_get_candidate(i, cand_str, 64))
                 ui->listWidget->addItem (QString::fromUtf16 (cand_str));
         }
+        //
+        if(search_res < 1)
+            ui->listWidget->addItem (pinyinCandidate);
     }
     if(ui->listWidget->count () > 0)
         ui->listWidget->setCurrentRow (0);
+    //
+    if(pinyinCandidate.size () > 0)
+    {
+        ui->listWidget->show ();
+        ui->label_pinyin->show ();
+    }
+    else
+    {
+        ui->listWidget->hide ();
+        ui->label_pinyin->hide ();
+    }
 }
 
-void VKeyboard::pinyin_show(void)
+void VKeyboard::pinyin_open(void)
 {
-    if(pinyin_isShow())
-        im_close_decoder();
-//    if(!pinyin_isShow())
+    if(pinyin_run)
     {
-        if(!im_open_decoder(argv_dictPath.toLocal8Bit ().data (), argv_dictUserPath.toLocal8Bit ().data ()))
-            qDebug() << "im_open_decoder: err!";
-        else
-            qDebug() << "im_open_decoder: success";
+        im_close_decoder();
+        pinyin_run = false;
+    }
+    if(!im_open_decoder(argv_dictPath.toLocal8Bit ().data (), argv_dictUserPath.toLocal8Bit ().data ()))
+    {
+        qDebug() << "im_open_decoder: err!";
+        pinyin_close ();
+    }
+    else
+    {
+        qDebug() << "im_open_decoder: success";
         //设置输入输出上限
         //max_sps_len: 输入拼音字母的最大长度
         //max_hzs_len: 解码中文字符的最大长度
@@ -99,17 +117,20 @@ void VKeyboard::pinyin_show(void)
         im_flush_cache();
         //重置
         im_reset_search();
+
+        pinyin_run = true;
+        ui->listWidget->show ();
+        ui->label_pinyin->show ();
     }
-    ui->listWidget->show ();
-    ui->label_pinyin->show ();
 }
 
-void VKeyboard::pinyin_hide(void)
+void VKeyboard::pinyin_close(void)
 {
-    if(pinyin_isShow())
+    if(pinyin_run)
         im_close_decoder();
     ui->listWidget->hide ();
     ui->label_pinyin->hide ();
+    pinyin_run = false;
 }
 
 void VKeyboard::pinyin_input(QString str)
@@ -136,18 +157,13 @@ void VKeyboard::pinyin_clean(void)
     ui->listWidget->clear ();
     pinyinCandidate = "";
     ui->label_pinyin->setText (pinyinCandidate);
-//    if(pinyin_isShow())
-//    {
-//        //清除缓冲
-//        im_flush_cache();
-//        //重置
-//        im_reset_search();
-//    }
+    ui->listWidget->hide ();
+    ui->label_pinyin->hide ();
 }
 
-bool VKeyboard::pinyin_isShow(void)
+bool VKeyboard::pinyin_isOpen(void)
 {
-    return !ui->listWidget->isHidden ();
+    return pinyin_run;
 }
 
 bool VKeyboard::pinyin_move(bool isRight)
@@ -203,7 +219,7 @@ VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidg
         }
     }
     //输入字符范围限制
-    pinyin_hide ();
+    pinyin_close ();
     if(type != ANY)
     {
         //底部栏按键使能选择
@@ -234,7 +250,7 @@ VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidg
         {
             grid_load(PINYIN);
             pinyin_clean();
-            pinyin_show ();
+            pinyin_open ();
         }
         else if((type&SYMBOL))
         {
@@ -421,7 +437,7 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     else if(pb == ui->pushButton_29)
     {
         grid_load(NUMBER);
-        pinyin_hide ();
+        pinyin_close ();
     }
     //字母
     else if(pb == ui->pushButton_30)
@@ -449,20 +465,20 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
                 ui->pushButton_30->setText ("-abc-");
             }
         }
-        pinyin_hide ();
+        pinyin_close ();
     }
     //拼音
     else if(pb == ui->pushButton_31)
     {
         grid_load(LOWER);
         pinyin_clean();
-        pinyin_show ();
+        pinyin_open ();
     }
     //符号
     else if(pb == ui->pushButton_32)
     {
         grid_load(SYMBOL);
-        pinyin_hide ();
+        pinyin_close ();
     }
     //保存结束
     else if(pb == ui->pushButton_33)
@@ -482,7 +498,7 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     //键值输入
     else if(pb)
     {
-        if(pinyin_isShow ())
+        if(pinyin_isOpen ())
             pinyin_input (pb->text ());
         else
             textEdit.insertPlainText (pb->text ());
