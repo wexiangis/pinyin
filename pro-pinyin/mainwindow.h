@@ -32,6 +32,8 @@ private slots:
 
     void on_pushButton_all_clicked();
 
+    void on_pushButton_user_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString result = "白日依山尽";

@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pushButton_pinyin->installEventFilter (this);
     ui->pushButton_symbol->installEventFilter (this);
     ui->pushButton_word->installEventFilter (this);
+    ui->pushButton_user->installEventFilter (this);
 }
 
 MainWindow::~MainWindow()
@@ -59,36 +60,44 @@ bool MainWindow::eventFilter (QObject *obj, QEvent *event)
 
 void MainWindow::on_pushButton_number_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::NUMBER);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_NUMBER);
     vk->show ();
 }
 void MainWindow::on_pushButton_low_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::LOWER);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_LOWER);
     vk->show ();
 }
 void MainWindow::on_pushButton_capital_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::CAPITAL);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_CAPITAL);
     vk->show ();
 }
 void MainWindow::on_pushButton_word_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::LOWER|VKeyboard::CAPITAL);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_LOWER|VKeyboard::KB_CAPITAL);
     vk->show ();
 }
 void MainWindow::on_pushButton_pinyin_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::PINYIN);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_PINYIN);
     vk->show ();
 }
 void MainWindow::on_pushButton_symbol_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::SYMBOL);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_SYMBOL);
     vk->show ();
 }
 void MainWindow::on_pushButton_all_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::ANY);
+    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_ANY);
+    vk->show ();
+}
+void MainWindow::on_pushButton_user_clicked()
+{
+    VKeyboard *vk = new VKeyboard(&result,
+        VKeyboard::KB_LOWER|
+        VKeyboard::KB_NUMBER|
+        VKeyboard::KB_USER, ".-:/");
     vk->show ();
 }

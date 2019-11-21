@@ -25,16 +25,17 @@ class VKeyboard : public QWidget
 public:
 
     enum KB_TYPE{
-        ANY = 0,
+        KB_ANY = 0,
         //以下项可叠加使用
-        NUMBER = 0x01,
-        LOWER = 0x02,
-        CAPITAL = 0x04,
-        PINYIN = 0x08,
-        SYMBOL = 0x10,
+        KB_NUMBER = 0x01,
+        KB_LOWER = 0x02,
+        KB_CAPITAL = 0x04,
+        KB_PINYIN = 0x08,
+        KB_SYMBOL = 0x10,
+        KB_USER = 0x20,
     };
 
-    VKeyboard(QString *value = NULL, int type = ANY, bool space = false, bool multiLine = false, QWidget *parent = 0);
+    VKeyboard(QString *value = NULL, int type = KB_ANY, QString userCandidate = "", bool space = false, bool multiLine = false, QWidget *parent = 0);
     ~VKeyboard();
 
 protected:
@@ -71,6 +72,7 @@ private:
     const QString kb_lower = "qwertyuiopasdfghjklzxcvbnm";
     const QString kb_capital = "QWERTYUIOPASDFGHJKLZXCVBNM";
     const QString kb_symbol = "+-*/=:\";',()[]{}<>~!?._@#%\\|";
+    QString kb_user;
 };
 
 

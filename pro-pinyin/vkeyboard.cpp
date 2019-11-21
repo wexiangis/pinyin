@@ -192,12 +192,13 @@ bool VKeyboard::pinyin_move(bool isRight)
     return false;
 }
 
-VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidget *parent) :
+VKeyboard::VKeyboard(QString *value, int type, QString userCandidate, bool space, bool multiLine, QWidget *parent) :
     QWidget(parent, Qt::FramelessWindowHint),
     returnString(value),
     kb_type(type),
     useSpace(space),
     useMultiLine(multiLine),
+    kb_user(userCandidate),
     ui(new Ui::VKeyboard)
 {
     ui->setupUi(this);
@@ -220,41 +221,50 @@ VKeyboard::VKeyboard(QString *value, int type, bool space, bool multiLine, QWidg
     }
     //输入字符范围限制
     pinyin_close ();
-    if(type != ANY)
+    if(type != KB_ANY)
     {
         //底部栏按键使能选择
-        if((type&LOWER) == 0 && (type&CAPITAL) == 0)
+        if(!(type&KB_LOWER) && !(type&KB_CAPITAL))
             ui->pushButton_30->setEnabled (false);
-        if((type&NUMBER) == 0)
+        if(!(type&KB_NUMBER))
             ui->pushButton_29->setEnabled (false);
-        if((type&PINYIN) == 0)
+        if(!(type&KB_PINYIN))
             ui->pushButton_31->setEnabled (false);
-        if((type&SYMBOL) == 0)
+        if(!(type&KB_SYMBOL) && !(type&KB_USER))
             ui->pushButton_32->setEnabled (false);
         //默认键盘选择
-        if(!(type&LOWER) && (type&CAPITAL))
+        if(!(type&KB_LOWER) && (type&KB_CAPITAL))
         {
-            grid_load(CAPITAL);
+            grid_load(KB_CAPITAL);
             ui->pushButton_30->setText ("-ABC-");
         }
-        else if((type&LOWER) && !(type&CAPITAL))
+        else if((type&KB_LOWER) && !(type&KB_CAPITAL))
         {
-            grid_load(LOWER);
+            grid_load(KB_LOWER);
             ui->pushButton_30->setText ("-abc-");
         }
-        else if((type&NUMBER))
+        else if((type&KB_LOWER) && (type&KB_CAPITAL))
         {
-            grid_load(NUMBER);
+            grid_load(KB_LOWER);
+            ui->pushButton_30->setText ("abc");
         }
-        else if((type&PINYIN))
+        else if((type&KB_NUMBER))
         {
-            grid_load(PINYIN);
+            grid_load(KB_NUMBER);
+        }
+        else if((type&KB_PINYIN))
+        {
+            grid_load(KB_PINYIN);
             pinyin_clean();
             pinyin_open ();
         }
-        else if((type&SYMBOL))
+        else if((type&KB_SYMBOL))
         {
-            grid_load(SYMBOL);
+            grid_load(KB_SYMBOL);
+        }
+        else if((type&KB_USER))
+        {
+            grid_load(KB_USER);
         }
     }
     else
@@ -346,18 +356,21 @@ void VKeyboard::grid_load(KB_TYPE type)
     QString tarString;
     switch(type)
     {
-        case NUMBER:
+        case KB_NUMBER:
             tarString = kb_number;
             break;
-        case PINYIN:
-        case LOWER:
+        case KB_PINYIN:
+        case KB_LOWER:
             tarString = kb_lower;
             break;
-        case CAPITAL:
+        case KB_CAPITAL:
             tarString = kb_capital;
             break;
-        case SYMBOL:
+        case KB_SYMBOL:
             tarString = kb_symbol;
+            break;
+        case KB_USER:
+            tarString = kb_user;
             break;
         default:
             return;
@@ -411,6 +424,14 @@ void VKeyboard::grid_jump(QObject *obj, int keyType)
                 pb = kg->udlr[order];
             count ++;
         }
+        //
+        if(pb == obj)
+        {
+            if(keyType == Qt::Key_Up || keyType == Qt::Key_Left)
+                focusNextPrevChild (false);
+            else
+                focusNextPrevChild (true);
+        }
     }
 }
 
@@ -436,7 +457,7 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     //数字
     else if(pb == ui->pushButton_29)
     {
-        grid_load(NUMBER);
+        grid_load(KB_NUMBER);
         pinyin_close ();
     }
     //字母
@@ -444,24 +465,24 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     {
         if(ui->pushButton_30->text () == "abc")
         {
-            grid_load(LOWER);
+            grid_load(KB_LOWER);
             ui->pushButton_30->setText ("ABC");
         }
         else if(ui->pushButton_30->text () == "ABC")
         {
-            grid_load(CAPITAL);
+            grid_load(KB_CAPITAL);
             ui->pushButton_30->setText ("abc");
         }
         else
         {
-            if((kb_type&CAPITAL))
+            if((kb_type&KB_CAPITAL))
             {
-                grid_load(CAPITAL);
+                grid_load(KB_CAPITAL);
                 ui->pushButton_30->setText ("-ABC-");
             }
             else
             {
-                grid_load(LOWER);
+                grid_load(KB_LOWER);
                 ui->pushButton_30->setText ("-abc-");
             }
         }
@@ -470,14 +491,17 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     //拼音
     else if(pb == ui->pushButton_31)
     {
-        grid_load(LOWER);
+        grid_load(KB_LOWER);
         pinyin_clean();
         pinyin_open ();
     }
     //符号
     else if(pb == ui->pushButton_32)
     {
-        grid_load(SYMBOL);
+        if(kb_type&KB_USER)
+            grid_load(KB_USER);
+        else
+            grid_load(KB_SYMBOL);
         pinyin_close ();
     }
     //保存结束
