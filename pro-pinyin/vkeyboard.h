@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QKeyEvent>
 #include <QPushButton>
+#include <QListWidgetItem>
 
 namespace Ui {
 class VKeyboard;
@@ -57,6 +58,8 @@ protected:
 
 private slots:
     void on_pushButton_clicked(bool c);
+
+    void on_listWidget_itemClicked(QListWidgetItem *item);
 
 private:
     Ui::VKeyboard *ui;

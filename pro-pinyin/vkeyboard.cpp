@@ -590,3 +590,12 @@ bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
     }
     return QWidget::eventFilter(obj, event);
 }
+
+void VKeyboard::on_listWidget_itemClicked(QListWidgetItem *item)
+{
+    if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
+    {
+        textEdit.insertPlainText (item->text ());
+        pinyin_clean ();
+    }
+}
