@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>VKeyboard</class>
- <widget class="QWidget" name="VKeyboard">
+ <widget class="QDialog" name="VKeyboard">
   <property name="geometry">
    <rect>
     <x>0</x>

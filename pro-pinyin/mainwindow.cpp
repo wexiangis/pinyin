@@ -61,37 +61,37 @@ bool MainWindow::eventFilter (QObject *obj, QEvent *event)
 void MainWindow::on_pushButton_number_clicked()
 {
     VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_NUMBER);
-    vk->show ();
+    vk->exec ();
 }
 void MainWindow::on_pushButton_low_clicked()
 {
     VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_LOWER);
-    vk->show ();
+    vk->exec ();
 }
 void MainWindow::on_pushButton_capital_clicked()
 {
     VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_CAPITAL);
-    vk->show ();
+    vk->exec ();
 }
 void MainWindow::on_pushButton_word_clicked()
 {
     VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_LOWER|VKeyboard::KB_CAPITAL);
-    vk->show ();
+    vk->exec ();
 }
 void MainWindow::on_pushButton_pinyin_clicked()
 {
     VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_PINYIN);
-    vk->show ();
+    vk->exec ();
 }
 void MainWindow::on_pushButton_symbol_clicked()
 {
     VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_SYMBOL);
-    vk->show ();
+    vk->exec ();
 }
 void MainWindow::on_pushButton_all_clicked()
 {
     VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_ANY);
-    vk->show ();
+    vk->exec ();
 }
 void MainWindow::on_pushButton_user_clicked()
 {
@@ -99,5 +99,5 @@ void MainWindow::on_pushButton_user_clicked()
         VKeyboard::KB_LOWER|
         VKeyboard::KB_NUMBER|
         VKeyboard::KB_USER, ".-:/");
-    vk->show ();
+    vk->exec ();
 }

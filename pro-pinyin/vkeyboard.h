@@ -1,7 +1,7 @@
 #ifndef VKEYBOARD_H
 #define VKEYBOARD_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QKeyEvent>
 #include <QPushButton>
 #include <QListWidgetItem>
@@ -19,7 +19,7 @@ public:
     void startCursor(void);
 };
 
-class VKeyboard : public QWidget
+class VKeyboard : public QDialog
 {
     Q_OBJECT
 

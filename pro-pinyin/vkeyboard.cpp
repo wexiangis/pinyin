@@ -193,7 +193,7 @@ bool VKeyboard::pinyin_move(bool isRight)
 }
 
 VKeyboard::VKeyboard(QString *value, int type, QString userCandidate, bool space, bool multiLine, QWidget *parent) :
-    QWidget(parent, Qt::FramelessWindowHint),
+    QDialog(parent, Qt::FramelessWindowHint),
     returnString(value),
     kb_type(type),
     useSpace(space),
@@ -204,17 +204,13 @@ VKeyboard::VKeyboard(QString *value, int type, QString userCandidate, bool space
     ui->setupUi(this);
     this->setGeometry (0, 0, this->width (), this->height ());
     //遍历控件,连接到eventFilter()
-    QObjectList list = ui->gridLayoutWidget->children() ;
-    foreach (QObject *obj, list)
-    {
-        if(obj->objectName ().indexOf("pushButton") == 0)
-            obj->installEventFilter (this);
-    }
     //鼠标回调
     foreach (QObject *obj, ui->gridLayoutWidget->children())
     {
         if(obj->objectName ().indexOf("pushButton") == 0)
         {
+            qDebug() << obj->objectName ();
+            obj->installEventFilter (this);
             QPushButton *pb = (QPushButton*)obj;
             connect(pb, SIGNAL(clicked(bool)), this, SLOT(on_pushButton_clicked(bool)));
         }
