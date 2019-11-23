@@ -1,5 +1,5 @@
-#include "vkeyboard.h"
-#include "ui_vkeyboard.h"
+#include "vinput.h"
+#include "ui_vinput.h"
 
 #include "pinyinime.h"
 #include <QDebug>
@@ -63,7 +63,7 @@ void google_pinyin_test()
     im_close_decoder();
 }
 
-void VKeyboard::pinyin_refreshList(void)
+void VInput::pinyin_refreshList(void)
 {
     ui->listWidget->clear ();
     if(pinyinCandidate.size () > 0)
@@ -94,7 +94,7 @@ void VKeyboard::pinyin_refreshList(void)
     }
 }
 
-void VKeyboard::pinyin_open(void)
+void VInput::pinyin_open(void)
 {
     if(pinyin_run)
     {
@@ -124,7 +124,7 @@ void VKeyboard::pinyin_open(void)
     }
 }
 
-void VKeyboard::pinyin_close(void)
+void VInput::pinyin_close(void)
 {
     if(pinyin_run)
         im_close_decoder();
@@ -133,14 +133,14 @@ void VKeyboard::pinyin_close(void)
     pinyin_run = false;
 }
 
-void VKeyboard::pinyin_input(QString str)
+void VInput::pinyin_input(QString str)
 {
     pinyinCandidate.append (str);
     ui->label_pinyin->setText (pinyinCandidate);
     pinyin_refreshList();
 }
 
-bool VKeyboard::pinyin_delete(void)
+bool VInput::pinyin_delete(void)
 {
     if(pinyinCandidate.size () > 0)
     {
@@ -152,7 +152,7 @@ bool VKeyboard::pinyin_delete(void)
     return false;
 }
 
-void VKeyboard::pinyin_clean(void)
+void VInput::pinyin_clean(void)
 {
     ui->listWidget->clear ();
     pinyinCandidate = "";
@@ -161,12 +161,12 @@ void VKeyboard::pinyin_clean(void)
     ui->label_pinyin->hide ();
 }
 
-bool VKeyboard::pinyin_isOpen(void)
+bool VInput::pinyin_isOpen(void)
 {
     return pinyin_run;
 }
 
-bool VKeyboard::pinyin_move(bool isRight)
+bool VInput::pinyin_move(bool isRight)
 {
     if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
     {
@@ -192,14 +192,14 @@ bool VKeyboard::pinyin_move(bool isRight)
     return false;
 }
 
-VKeyboard::VKeyboard(QString *value, int type, QString userCandidate, bool space, bool multiLine, QWidget *parent) :
+VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool multiLine, QWidget *parent) :
     QDialog(parent, Qt::FramelessWindowHint),
     returnString(value),
     kb_type(type),
     useSpace(space),
     useMultiLine(multiLine),
     kb_user(userCandidate),
-    ui(new Ui::VKeyboard)
+    ui(new Ui::VInput)
 {
     ui->setupUi(this);
     this->setGeometry (0, 0, this->width (), this->height ());
@@ -209,7 +209,7 @@ VKeyboard::VKeyboard(QString *value, int type, QString userCandidate, bool space
     {
         if(obj->objectName ().indexOf("pushButton") == 0)
         {
-            qDebug() << obj->objectName ();
+//            qDebug() << obj->objectName ();
             obj->installEventFilter (this);
             QPushButton *pb = (QPushButton*)obj;
             connect(pb, SIGNAL(clicked(bool)), this, SLOT(on_pushButton_clicked(bool)));
@@ -242,7 +242,7 @@ VKeyboard::VKeyboard(QString *value, int type, QString userCandidate, bool space
         else if((type&KB_LOWER) && (type&KB_CAPITAL))
         {
             grid_load(KB_LOWER);
-            ui->pushButton_30->setText ("abc");
+            ui->pushButton_30->setText ("ABC");
         }
         else if((type&KB_NUMBER))
         {
@@ -284,9 +284,11 @@ VKeyboard::VKeyboard(QString *value, int type, QString userCandidate, bool space
     ui->verticalLayout->insertWidget (0, &textEdit);
     textEdit.startCursor();
     textEdit.moveCursor (QTextCursor::End);
+    //
+    ui->pushButton_34->setFocus ();
 }
 
-VKeyboard::~VKeyboard()
+VInput::~VInput()
 {
     //遍历控件,销毁userData
     KeyboardGrid *kg;
@@ -305,7 +307,7 @@ VKeyboard::~VKeyboard()
 }
 
 //把每个按键的上下左右链接起来
-void VKeyboard::grid_link()
+void VInput::grid_link()
 {
     ui->pushButton_1->setUserData (0, new KeyboardGrid(ui->pushButton_28, ui->pushButton_11, ui->pushButton_10, ui->pushButton_2));
     ui->pushButton_2->setUserData (0, new KeyboardGrid(ui->pushButton_29, ui->pushButton_12, ui->pushButton_1, ui->pushButton_3));
@@ -347,7 +349,7 @@ void VKeyboard::grid_link()
 }
 
 //按输入类型加载键盘
-void VKeyboard::grid_load(KB_TYPE type)
+void VInput::grid_load(KB_TYPE type)
 {
     QString tarString;
     switch(type)
@@ -400,7 +402,7 @@ void VKeyboard::grid_load(KB_TYPE type)
 }
 
 //键盘上的焦点的跳转规则
-void VKeyboard::grid_jump(QObject *obj, int keyType)
+void VInput::grid_jump(QObject *obj, int keyType)
 {
     KeyboardGrid *kg = (KeyboardGrid*)(obj->userData (0));
     if(kg && keyType >= Qt::Key_Left && keyType <= Qt::Key_Down)
@@ -432,13 +434,13 @@ void VKeyboard::grid_jump(QObject *obj, int keyType)
 }
 
 //鼠标点击键盘事件也转到clicked_rule()
-void VKeyboard::on_pushButton_clicked(bool c)
+void VInput::on_pushButton_clicked(bool c)
 {
     clicked_rule((QPushButton*)QApplication::focusWidget());
 }
 
 //每个按键的点击事件都归到这里统一管理
-bool VKeyboard::clicked_rule(QPushButton *pb)
+bool VInput::clicked_rule(QPushButton *pb)
 {
     //空格
     if(pb == ui->pushButton_20 && ui->pushButton_20->text().size ()> 1)
@@ -530,7 +532,7 @@ bool VKeyboard::clicked_rule(QPushButton *pb)
     return true;
 }
 
-bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
+bool VInput::eventFilter (QObject *obj, QEvent *event)
 {
     if(obj->parent() == ui->gridLayoutWidget)
     {
@@ -587,7 +589,7 @@ bool VKeyboard::eventFilter (QObject *obj, QEvent *event)
     return QWidget::eventFilter(obj, event);
 }
 
-void VKeyboard::on_listWidget_itemClicked(QListWidgetItem *item)
+void VInput::on_listWidget_itemClicked(QListWidgetItem *item)
 {
     if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
     {

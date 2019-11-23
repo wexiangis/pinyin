@@ -46,7 +46,7 @@ SOURCES += \
     googlepinyin/userdict.cpp \
     googlepinyin/utf16char.cpp \
     googlepinyin/utf16reader.cpp \
-    vkeyboard.cpp
+    vinput.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -71,8 +71,8 @@ HEADERS += \
     googlepinyin/userdict.h \
     googlepinyin/utf16char.h \
     googlepinyin/utf16reader.h \
-    vkeyboard.h
+    vinput.h
 
 FORMS += \
     mainwindow.ui \
-    vkeyboard.ui
+    vinput.ui

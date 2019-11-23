@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VKeyboard</class>
- <widget class="QDialog" name="VKeyboard">
+ <class>VInput</class>
+ <widget class="QDialog" name="VInput">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -19,7 +19,7 @@
      <x>0</x>
      <y>0</y>
      <width>480</width>
-     <height>60</height>
+     <height>62</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -84,8 +84,8 @@
     <rect>
      <x>0</x>
      <y>60</y>
-     <width>480</width>
-     <height>212</height>
+     <width>482</width>
+     <height>214</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -725,16 +725,7 @@
        <string>取消
 返回</string>
       </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-      <property name="autoDefault">
-       <bool>false</bool>
-      </property>
       <property name="default">
-       <bool>false</bool>
-      </property>
-      <property name="flat">
        <bool>false</bool>
       </property>
      </widget>

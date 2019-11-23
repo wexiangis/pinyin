@@ -1,5 +1,5 @@
-#ifndef VKEYBOARD_H
-#define VKEYBOARD_H
+#ifndef VINPUT_H
+#define VINPUT_H
 
 #include <QDialog>
 #include <QKeyEvent>
@@ -7,7 +7,7 @@
 #include <QListWidgetItem>
 
 namespace Ui {
-class VKeyboard;
+class VInput;
 }
 
 #include <QTextEdit>
@@ -19,7 +19,7 @@ public:
     void startCursor(void);
 };
 
-class VKeyboard : public QDialog
+class VInput : public QDialog
 {
     Q_OBJECT
 
@@ -36,8 +36,8 @@ public:
         KB_USER = 0x20,
     };
 
-    VKeyboard(QString *value = NULL, int type = KB_ANY, QString userCandidate = "", bool space = false, bool multiLine = false, QWidget *parent = 0);
-    ~VKeyboard();
+    VInput(QString *value = NULL, int type = KB_ANY, QString userCandidate = "", bool space = false, bool multiLine = false, QWidget *parent = 0);
+    ~VInput();
 
 protected:
     void grid_link();
@@ -56,13 +56,12 @@ protected:
 
     bool eventFilter (QObject *obj, QEvent *event);
 
-private slots:
+protected slots:
     void on_pushButton_clicked(bool c);
-
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
 private:
-    Ui::VKeyboard *ui;
+    Ui::VInput *ui;
     MyTextEdit textEdit;//光标常闪输入框
     bool useSpace;//记录传参,是否启用空格
     bool useMultiLine;//记录传参,是否启用回车
@@ -79,4 +78,4 @@ private:
 };
 
 
-#endif // VKEYBOARD_H
+#endif // VInput_H

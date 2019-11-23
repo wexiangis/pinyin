@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "vkeyboard.h"
+#include "vinput.h"
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -60,44 +60,44 @@ bool MainWindow::eventFilter (QObject *obj, QEvent *event)
 
 void MainWindow::on_pushButton_number_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_NUMBER);
+    VInput *vk = new VInput(&result, VInput::KB_NUMBER);
     vk->exec ();
 }
 void MainWindow::on_pushButton_low_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_LOWER);
+    VInput *vk = new VInput(&result, VInput::KB_LOWER);
     vk->exec ();
 }
 void MainWindow::on_pushButton_capital_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_CAPITAL);
+    VInput *vk = new VInput(&result, VInput::KB_CAPITAL);
     vk->exec ();
 }
 void MainWindow::on_pushButton_word_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_LOWER|VKeyboard::KB_CAPITAL);
+    VInput *vk = new VInput(&result, VInput::KB_LOWER|VInput::KB_CAPITAL);
     vk->exec ();
 }
 void MainWindow::on_pushButton_pinyin_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_PINYIN);
+    VInput *vk = new VInput(&result, VInput::KB_PINYIN);
     vk->exec ();
 }
 void MainWindow::on_pushButton_symbol_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_SYMBOL);
+    VInput *vk = new VInput(&result, VInput::KB_SYMBOL);
     vk->exec ();
 }
 void MainWindow::on_pushButton_all_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result, VKeyboard::KB_ANY);
+    VInput *vk = new VInput(&result, VInput::KB_ANY);
     vk->exec ();
 }
 void MainWindow::on_pushButton_user_clicked()
 {
-    VKeyboard *vk = new VKeyboard(&result,
-        VKeyboard::KB_LOWER|
-        VKeyboard::KB_NUMBER|
-        VKeyboard::KB_USER, ".-:/");
+    VInput *vk = new VInput(&result,
+        VInput::KB_LOWER|
+        VInput::KB_NUMBER|
+        VInput::KB_USER, ".-:/");
     vk->exec ();
 }
