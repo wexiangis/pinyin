@@ -57,7 +57,7 @@ protected:
     bool eventFilter (QObject *obj, QEvent *event);
 
 protected slots:
-    void on_pushButton_clicked(bool c);
+    void comm_pushButton_clicked(bool c);
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
 private:

@@ -212,7 +212,7 @@ VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool
 //            qDebug() << obj->objectName ();
             obj->installEventFilter (this);
             QPushButton *pb = (QPushButton*)obj;
-            connect(pb, SIGNAL(clicked(bool)), this, SLOT(on_pushButton_clicked(bool)));
+            connect(pb, SIGNAL(clicked(bool)), this, SLOT(comm_pushButton_clicked(bool)));
         }
     }
     //输入字符范围限制
@@ -434,7 +434,7 @@ void VInput::grid_jump(QObject *obj, int keyType)
 }
 
 //鼠标点击键盘事件也转到clicked_rule()
-void VInput::on_pushButton_clicked(bool c)
+void VInput::comm_pushButton_clicked(bool c)
 {
     clicked_rule((QPushButton*)QApplication::focusWidget());
 }
