@@ -4,8 +4,8 @@
 #include "pinyinime.h"
 #include <QDebug>
 
-QString argv_dictPath = "./dict/dict_pinyin.dat";
-QString argv_dictUserPath = "./dict/dict_pinyin_user.dat";
+QString argv_dictPath = "/usr/local/fw6118/dict/dict_pinyin.dat";
+QString argv_dictUserPath = "/usr/local/fw6118/dict/dict_pinyin_user.dat";
 
 //键盘上下左右跳转指针,放置到pushButton的userData中
 class KeyboardGrid : public QObjectUserData
@@ -201,6 +201,7 @@ VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool
     kb_user(userCandidate),
     ui(new Ui::VInput)
 {
+    this->setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
     this->setGeometry (0, 0, this->width (), this->height ());
     //遍历控件,连接到eventFilter()
@@ -290,19 +291,6 @@ VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool
 
 VInput::~VInput()
 {
-    //遍历控件,销毁userData
-    KeyboardGrid *kg;
-    QObjectList list = ui->gridLayoutWidget->children() ;
-    foreach (QObject *obj, list)
-    {
-        if(obj->objectName ().indexOf("pushButton") == 0)
-        {
-            kg = (KeyboardGrid*)(obj->userData (0));
-            if(kg)
-                delete kg;
-        }
-    }
-    //
     delete ui;
 }
 
@@ -387,7 +375,7 @@ void VInput::grid_load(KB_TYPE type)
             }
             else
             {
-                pb->setText ("");
+                pb->setText (" ");
                 pb->setEnabled (false);
             }
             count++;
@@ -510,12 +498,12 @@ bool VInput::clicked_rule(QPushButton *pb)
             *returnString = textEdit.toPlainText ();
             qDebug() << *returnString;
         }
-        close ();
+        this->done (1);
     }
     //取消返回
     else if(pb == ui->pushButton_34)
     {
-        close ();
+        this->done (0);
     }
     //键值输入
     else if(pb)
@@ -534,6 +522,9 @@ bool VInput::clicked_rule(QPushButton *pb)
 
 bool VInput::eventFilter (QObject *obj, QEvent *event)
 {
+    if(this->isHidden ())
+        return true;
+
     if(obj->parent() == ui->gridLayoutWidget)
     {
         if(event->type() == QEvent::KeyPress)
