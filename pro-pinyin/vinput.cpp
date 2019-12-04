@@ -4,8 +4,16 @@
 #include "pinyinime.h"
 #include <QDebug>
 
+#define VINPUT_MODE 0
+
+#if(VINPUT_MODE)
+#include "main_argv.h"
+extern QString argv_dictPath;
+extern QString argv_dictUserPath;
+#else
 QString argv_dictPath = "/usr/local/fw6118/dict/dict_pinyin.dat";
 QString argv_dictUserPath = "/usr/local/fw6118/dict/dict_pinyin_user.dat";
+#endif
 
 //键盘上下左右跳转指针,放置到pushButton的userData中
 class KeyboardGrid : public QObjectUserData
@@ -292,6 +300,7 @@ VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool
 VInput::~VInput()
 {
     delete ui;
+    ui = NULL;
 }
 
 //把每个按键的上下左右链接起来
@@ -522,6 +531,13 @@ bool VInput::clicked_rule(QPushButton *pb)
 
 bool VInput::eventFilter (QObject *obj, QEvent *event)
 {
+#if(VINPUT_MODE)
+    if(argv_screenOff_count < 0){
+        argv_screenOff_count = 0;
+        return true;
+    }argv_screenOff_count = 0;
+#endif
+
     if(this->isHidden ())
         return true;
 
@@ -550,7 +566,7 @@ bool VInput::eventFilter (QObject *obj, QEvent *event)
                     if(!pinyin_delete ())
                         textEdit.textCursor ().deletePreviousChar();
                     break;
-                case Qt::Key_P://确认
+                case Qt::Key_P://选择
                     if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
                     {
                         textEdit.insertPlainText (ui->listWidget->currentItem ()->text ());
@@ -585,6 +601,58 @@ void VInput::on_listWidget_itemClicked(QListWidgetItem *item)
     if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
     {
         textEdit.insertPlainText (item->text ());
+        pinyin_clean ();
+    }
+}
+
+void VInput::on_pushButton_tips_up_clicked()
+{
+    grid_jump(focusWidget (), Qt::Key_Up);
+}
+
+void VInput::on_pushButton_tips_down_clicked()
+{
+    grid_jump(focusWidget (), Qt::Key_Down);
+}
+
+void VInput::on_pushButton_tips_left_clicked()
+{
+    grid_jump(focusWidget (), Qt::Key_Left);
+}
+
+void VInput::on_pushButton_tips_right_clicked()
+{
+    grid_jump(focusWidget (), Qt::Key_Right);
+}
+
+void VInput::on_pushButton_tips_movL_clicked()
+{
+    if(!pinyin_move(false))
+        textEdit.moveCursor (QTextCursor::Left);
+}
+
+void VInput::on_pushButton_tips_movR_clicked()
+{
+    if(!pinyin_move(true))
+        textEdit.moveCursor (QTextCursor::Right);
+}
+
+void VInput::on_pushButton_tips_ent_clicked()
+{
+    clicked_rule((QPushButton*)focusWidget ());
+}
+
+void VInput::on_pushButton_tips_del_clicked()
+{
+    if(!pinyin_delete ())
+        textEdit.textCursor ().deletePreviousChar();
+}
+
+void VInput::on_pushButton_tips_select_clicked()
+{
+    if(!ui->listWidget->isHidden () && ui->listWidget->count () > 0)
+    {
+        textEdit.insertPlainText (ui->listWidget->currentItem ()->text ());
         pinyin_clean ();
     }
 }

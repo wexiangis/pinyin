@@ -60,12 +60,30 @@ protected slots:
     void comm_pushButton_clicked(bool c);
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
+    void on_pushButton_tips_up_clicked();
+    
+    void on_pushButton_tips_down_clicked();
+
+    void on_pushButton_tips_left_clicked();
+
+    void on_pushButton_tips_right_clicked();
+    
+    void on_pushButton_tips_movL_clicked();
+    
+    void on_pushButton_tips_movR_clicked();
+    
+    void on_pushButton_tips_ent_clicked();
+    
+    void on_pushButton_tips_del_clicked();
+    
+    void on_pushButton_tips_select_clicked();
+
 private:
     Ui::VInput *ui;
     MyTextEdit textEdit;//光标常闪输入框
     bool useSpace;//记录传参,是否启用空格
     bool useMultiLine;//记录传参,是否启用回车
-    int kb_type;//记录传参,输入类型
+    int kb_type = 0;//记录传参,输入类型
     QString *returnString;//返回写入
     QString pinyinCandidate = "";//缓存拼音输入
     bool pinyin_run = false;//拼音输入法运行状态
@@ -74,7 +92,7 @@ private:
     const QString kb_lower = "qwertyuiopasdfghjklzxcvbnm";
     const QString kb_capital = "QWERTYUIOPASDFGHJKLZXCVBNM";
     const QString kb_symbol = "+-*/=:\";',()[]{}<>~!?._@#%\\|";
-    QString kb_user;
+    QString kb_user = "";
 };
 
 

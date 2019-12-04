@@ -19,7 +19,7 @@
      <x>0</x>
      <y>0</y>
      <width>480</width>
-     <height>62</height>
+     <height>60</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -84,8 +84,8 @@
     <rect>
      <x>0</x>
      <y>60</y>
-     <width>482</width>
-     <height>214</height>
+     <width>480</width>
+     <height>212</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -769,96 +769,106 @@
        <number>1</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_tips_up">
+       <widget class="QPushButton" name="pushButton_tips_up">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
 border-radius:10px;
 padding:2px 4px;</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
         </property>
         <property name="text">
          <string>上</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_tips_down">
+       <widget class="QPushButton" name="pushButton_tips_down">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
 border-radius:10px;
 padding:2px 4px;</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
         </property>
         <property name="text">
          <string>下</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_tips_L">
+       <widget class="QPushButton" name="pushButton_tips_movL">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
          </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
 border-radius:10px;
 padding:2px 4px;</string>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
         <property name="text">
-         <string>前移</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <string>左移</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_tips_N">
+       <widget class="QPushButton" name="pushButton_tips_movR">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
          </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
 border-radius:10px;
 padding:2px 4px;</string>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
         <property name="text">
-         <string>后移</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <string>右移</string>
         </property>
        </widget>
       </item>
@@ -876,71 +886,80 @@ padding:2px 4px;</string>
        <number>15</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_tips_ent">
+       <widget class="QPushButton" name="pushButton_tips_ent">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
 border-radius:10px;
 padding:2px 4px;</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
         </property>
         <property name="text">
          <string>确认</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_tips_del">
+       <widget class="QPushButton" name="pushButton_tips_del">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
 border-radius:10px;
 padding:2px 4px;</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
         </property>
         <property name="text">
          <string>删除</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_select">
+       <widget class="QPushButton" name="pushButton_tips_select">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
          </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
 border-radius:10px;
 padding:2px 4px;</string>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
         <property name="text">
          <string>选择</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -952,57 +971,72 @@ padding:2px 4px;</string>
        <number>1</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_tips_left">
+       <widget class="QPushButton" name="pushButton_tips_left">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
 border-radius:10px;
 padding:2px 4px;</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
         </property>
         <property name="text">
          <string>左</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_tips_right">
+       <widget class="QPushButton" name="pushButton_tips_right">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
          </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
 border-radius:10px;
 padding:2px 4px;</string>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
         <property name="text">
          <string>右</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_tips_x">
+       <widget class="QPushButton" name="pushButton_tips_x">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
          </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
@@ -1010,38 +1044,35 @@ border-radius:10px;
 padding:2px 4px;
 background-color: rgb(211, 215, 207);</string>
         </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
         <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <string>-</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_tips_y">
+       <widget class="QPushButton" name="pushButton_tips_y">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">border:2px groove orange;
-background-color: rgb(211, 215, 207);
 border-radius:10px;
-padding:2px 4px;</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
+padding:2px 4px;
+background-color: rgb(211, 215, 207);</string>
         </property>
         <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <string>-</string>
         </property>
        </widget>
       </item>
@@ -1049,9 +1080,6 @@ padding:2px 4px;</string>
     </item>
    </layout>
   </widget>
-  <zorder>widget_kb_tips</zorder>
-  <zorder>verticalLayoutWidget</zorder>
-  <zorder>gridLayoutWidget</zorder>
  </widget>
  <tabstops>
   <tabstop>pushButton_1</tabstop>
