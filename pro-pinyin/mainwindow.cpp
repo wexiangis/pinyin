@@ -60,44 +60,51 @@ bool MainWindow::eventFilter (QObject *obj, QEvent *event)
 
 void MainWindow::on_pushButton_number_clicked()
 {
-    VInput *vk = new VInput(&result, VInput::KB_NUMBER);
-    vk->exec ();
+    VInput vk(&result, VInput::KB_NUMBER);
+    vk.exec ();
 }
 void MainWindow::on_pushButton_low_clicked()
 {
-    VInput *vk = new VInput(&result, VInput::KB_LOWER);
-    vk->exec ();
+    VInput vk(&result, VInput::KB_LOWER);
+    vk.exec ();
+    ui->label->setText (result);
 }
 void MainWindow::on_pushButton_capital_clicked()
 {
-    VInput *vk = new VInput(&result, VInput::KB_CAPITAL);
-    vk->exec ();
+    VInput vk(&result, VInput::KB_CAPITAL);
+    vk.exec ();
+    ui->label->setText (result);
 }
 void MainWindow::on_pushButton_word_clicked()
 {
-    VInput *vk = new VInput(&result, VInput::KB_LOWER|VInput::KB_CAPITAL);
-    vk->exec ();
+    VInput vk(&result, VInput::KB_LOWER|VInput::KB_CAPITAL);
+    vk.exec ();
+    ui->label->setText (result);
 }
 void MainWindow::on_pushButton_pinyin_clicked()
 {
-    VInput *vk = new VInput(&result, VInput::KB_PINYIN);
-    vk->exec ();
+    VInput vk(&result, VInput::KB_PINYIN);
+    vk.exec ();
+    ui->label->setText (result);
 }
 void MainWindow::on_pushButton_symbol_clicked()
 {
-    VInput *vk = new VInput(&result, VInput::KB_SYMBOL);
-    vk->exec ();
+    VInput vk(&result, VInput::KB_SYMBOL);
+    vk.exec ();
+    ui->label->setText (result);
 }
 void MainWindow::on_pushButton_all_clicked()
 {
-    VInput *vk = new VInput(&result, VInput::KB_ANY);
-    vk->exec ();
+    VInput vk(&result, VInput::KB_ANY);
+    vk.exec ();
+    ui->label->setText (result);
 }
 void MainWindow::on_pushButton_user_clicked()
 {
-    VInput *vk = new VInput(&result,
+    VInput vk(&result,
         VInput::KB_LOWER|
         VInput::KB_NUMBER|
         VInput::KB_USER, ".-:/");
-    vk->exec ();
+    vk.exec ();
+    ui->label->setText (result);
 }

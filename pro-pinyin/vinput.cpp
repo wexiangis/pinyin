@@ -15,6 +15,8 @@ QString argv_dictPath = "/usr/local/fw6118/dict/dict_pinyin.dat";
 QString argv_dictUserPath = "/usr/local/fw6118/dict/dict_pinyin_user.dat";
 #endif
 
+//---------- 放在pushButton的UserData中的跳转指针 ----------
+
 //键盘上下左右跳转指针,放置到pushButton的userData中
 class KeyboardGrid : public QObjectUserData
 {
@@ -29,13 +31,17 @@ public:
     QPushButton *udlr[4];
 };
 
-using namespace ime_pinyin;
+//---------- 光标一直闪烁的输入框 ----------
 
 void MyTextEdit::startCursor(void)
 {
     QFocusEvent fe(QEvent::FocusIn, Qt::TabFocusReason);
     focusInEvent (&fe);
 }
+
+//---------- 拼音库测试 ----------
+
+using namespace ime_pinyin;
 
 void google_pinyin_test()
 {
@@ -70,6 +76,8 @@ void google_pinyin_test()
     }
     im_close_decoder();
 }
+
+//---------- 虚拟键盘 ----------
 
 void VInput::pinyin_refreshList(void)
 {
@@ -209,21 +217,9 @@ VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool
     kb_user(userCandidate),
     ui(new Ui::VInput)
 {
-    this->setAttribute(Qt::WA_DeleteOnClose);
+    // this->setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
     this->setGeometry (0, 0, this->width (), this->height ());
-    //遍历控件,连接到eventFilter()
-    //鼠标回调
-    foreach (QObject *obj, ui->gridLayoutWidget->children())
-    {
-        if(obj->objectName ().indexOf("pushButton") == 0)
-        {
-//            qDebug() << obj->objectName ();
-            obj->installEventFilter (this);
-            QPushButton *pb = (QPushButton*)obj;
-            connect(pb, SIGNAL(clicked(bool)), this, SLOT(comm_pushButton_clicked(bool)));
-        }
-    }
     //输入字符范围限制
     pinyin_close ();
     if(type != KB_ANY)
@@ -293,6 +289,18 @@ VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool
     ui->verticalLayout->insertWidget (0, &textEdit);
     textEdit.startCursor();
     textEdit.moveCursor (QTextCursor::End);
+    //遍历控件,连接到eventFilter()
+    //鼠标回调
+    foreach (QObject *obj, ui->gridLayoutWidget->children())
+    {
+        if(obj->objectName ().indexOf("pushButton") == 0)
+        {
+//            qDebug() << obj->objectName ();
+            obj->installEventFilter (this);
+            QPushButton *pb = (QPushButton*)obj;
+            connect(pb, SIGNAL(clicked(bool)), this, SLOT(comm_pushButton_clicked(bool)));
+        }
+    }
     //
     ui->pushButton_34->setFocus ();
 }
