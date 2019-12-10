@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setGeometry (0, 0, this->width (), this->height ());
     //
+    result = ui->label->text ();
+    //
     ui->pushButton_all->installEventFilter (this);
     ui->pushButton_capital->installEventFilter (this);
     ui->pushButton_low->installEventFilter (this);
@@ -18,7 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pushButton_pinyin->installEventFilter (this);
     ui->pushButton_symbol->installEventFilter (this);
     ui->pushButton_word->installEventFilter (this);
-    ui->pushButton_user->installEventFilter (this);
+    ui->pushButton_url->installEventFilter (this);
+    ui->pushButton_email->installEventFilter (this);
 }
 
 MainWindow::~MainWindow()
@@ -99,12 +102,22 @@ void MainWindow::on_pushButton_all_clicked()
     vk.exec ();
     ui->label->setText (result);
 }
-void MainWindow::on_pushButton_user_clicked()
+void MainWindow::on_pushButton_url_clicked()
 {
     VInput vk(&result,
         VInput::KB_LOWER|
         VInput::KB_NUMBER|
         VInput::KB_USER, ".-:/");
+    vk.exec ();
+    ui->label->setText (result);
+}
+
+void MainWindow::on_pushButton_email_clicked()
+{
+    VInput vk(&result,
+        VInput::KB_LOWER|
+        VInput::KB_NUMBER|
+        VInput::KB_USER, ".@");
     vk.exec ();
     ui->label->setText (result);
 }

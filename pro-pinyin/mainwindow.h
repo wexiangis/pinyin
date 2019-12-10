@@ -32,7 +32,9 @@ private slots:
 
     void on_pushButton_all_clicked();
 
-    void on_pushButton_user_clicked();
+    void on_pushButton_url_clicked();
+
+    void on_pushButton_email_clicked();
 
 private:
     Ui::MainWindow *ui;

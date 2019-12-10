@@ -208,12 +208,13 @@ bool VInput::pinyin_move(bool isRight)
     return false;
 }
 
-VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool multiLine, QWidget *parent) :
+VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool multiLine, bool tab, QWidget *parent) :
     QDialog(parent, Qt::FramelessWindowHint),
     returnString(value),
     kb_type(type),
     useSpace(space),
     useMultiLine(multiLine),
+    useTab(tab),
     kb_user(userCandidate),
     ui(new Ui::VInput)
 {
@@ -231,7 +232,7 @@ VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool
             ui->pushButton_29->setEnabled (false);
         if(!(type&KB_PINYIN))
             ui->pushButton_31->setEnabled (false);
-        if(!(type&KB_SYMBOL) && !(type&KB_USER))
+        if(!(type&KB_SYMBOL) && !(type&KB_USER) && !useTab)
             ui->pushButton_32->setEnabled (false);
         //默认键盘选择
         if(!(type&KB_LOWER) && (type&KB_CAPITAL))
@@ -259,19 +260,20 @@ VInput::VInput(QString *value, int type, QString userCandidate, bool space, bool
             pinyin_clean();
             pinyin_open ();
         }
-        else if((type&KB_SYMBOL))
-        {
-            grid_load(KB_SYMBOL);
-        }
         else if((type&KB_USER))
         {
             grid_load(KB_USER);
+        }
+        else if((type&KB_SYMBOL))
+        {
+            grid_load(KB_SYMBOL);
         }
     }
     else
     {
         useSpace = true;
         useMultiLine = true;
+        useTab = true;
     }
     //空格键
     ui->pushButton_20->setEnabled (useSpace);
@@ -370,7 +372,9 @@ void VInput::grid_load(KB_TYPE type)
             tarString = kb_capital;
             break;
         case KB_SYMBOL:
-            tarString = kb_symbol;
+            tarString = kb_symbol[kb_symbol_count++];
+            if(kb_symbol_count >= kb_symbol.size ())
+                kb_symbol_count = 0;
             break;
         case KB_USER:
             tarString = kb_user;
@@ -378,6 +382,7 @@ void VInput::grid_load(KB_TYPE type)
         default:
             return;
     }
+    //
     QPushButton *pb;
     int count = 0;
     foreach (QObject *obj, ui->gridLayoutWidget->children())
@@ -387,7 +392,12 @@ void VInput::grid_load(KB_TYPE type)
             pb = (QPushButton*)obj;
             if(count < tarString.size ())
             {
-                pb->setText (tarString.at (count));
+                QChar val = tarString.at (count);
+                //&符号特殊处理
+                if(val == '&')
+                    pb->setText ("&&");
+                else
+                    pb->setText (val);
                 pb->setEnabled (true);
             }
             else
@@ -399,6 +409,12 @@ void VInput::grid_load(KB_TYPE type)
             if(count > 25)
                 break;
         }
+    }
+    //
+    if(type == KB_SYMBOL || type == KB_USER)
+    {
+        ui->pushButton_27->setText ("Tab");
+        ui->pushButton_27->setEnabled (useTab);
     }
     ui->pushButton_20->setText ("Space");
     ui->pushButton_20->setEnabled (useSpace);
@@ -456,6 +472,11 @@ bool VInput::clicked_rule(QPushButton *pb)
     else if(pb == ui->pushButton_28 && ui->pushButton_28->text().size () > 1)
     {
         textEdit.insertPlainText ("\n");
+    }
+    //Tab
+    else if(pb == ui->pushButton_27 && ui->pushButton_27->text().size () > 1)
+    {
+        textEdit.insertPlainText ("\t");
     }
     //数字
     else if(pb == ui->pushButton_29)
@@ -528,7 +549,14 @@ bool VInput::clicked_rule(QPushButton *pb)
         if(pinyin_isOpen ())
             pinyin_input (pb->text ());
         else
-            textEdit.insertPlainText (pb->text ());
+        {
+            QString val = pb->text ();
+            //&符号特殊处理
+            if(val.size () > 1 && val == "&&")
+                    val = "&";
+            //
+            textEdit.insertPlainText (val);
+        }
     }
     else
         return false;

@@ -33,10 +33,11 @@ public:
         KB_CAPITAL = 0x04,
         KB_PINYIN = 0x08,
         KB_SYMBOL = 0x10,
-        KB_USER = 0x20,
+        KB_USER = 0x20,//该模式时启用userCandidate
     };
 
-    VInput(QString *value = NULL, int type = KB_ANY, QString userCandidate = "", bool space = false, bool multiLine = false, QWidget *parent = 0);
+    //type包含KB_USER时, 启用userCandidate, userCandidate最大长度25
+    VInput(QString *value = NULL, int type = KB_ANY, QString userCandidate = "", bool space = false, bool multiLine = false, bool tab = false, QWidget *parent = 0);
     ~VInput();
 
 protected:
@@ -83,6 +84,7 @@ private:
     MyTextEdit textEdit;//光标常闪输入框
     bool useSpace;//记录传参,是否启用空格
     bool useMultiLine;//记录传参,是否启用回车
+    bool useTab;
     int kb_type = 0;//记录传参,输入类型
     QString *returnString;//返回写入
     QString pinyinCandidate = "";//缓存拼音输入
@@ -91,7 +93,8 @@ private:
     const QString kb_number = "1234567890";
     const QString kb_lower = "qwertyuiopasdfghjklzxcvbnm";
     const QString kb_capital = "QWERTYUIOPASDFGHJKLZXCVBNM";
-    const QString kb_symbol = "+-*/=:\";',()[]{}<>~!?._@#%\\|";
+    const QStringList kb_symbol = QString("+-*/=:\";',()[]{}<>~!?._@% $#&^\\|`").split (" ");
+    int kb_symbol_count = 0;
     QString kb_user = "";
 };
 
