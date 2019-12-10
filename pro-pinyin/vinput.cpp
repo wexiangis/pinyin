@@ -358,46 +358,66 @@ void VInput::grid_link()
 //按输入类型加载键盘
 void VInput::grid_load(KB_TYPE type)
 {
-    QString tarString;
+    QStringList tarString;
+    int tarCount = 0, count = 0, countMax = 25;//每页最多26个字符
+    //
     switch(type)
     {
         case KB_NUMBER:
-            tarString = kb_number;
+            tarString = kb_number.split (" ");
             break;
         case KB_PINYIN:
         case KB_LOWER:
-            tarString = kb_lower;
+            tarString = kb_lower.split (" ");
             break;
         case KB_CAPITAL:
-            tarString = kb_capital;
+            tarString = kb_capital.split (" ");
             break;
         case KB_SYMBOL:
-            tarString = kb_symbol[kb_symbol_count++];
-            if(kb_symbol_count >= kb_symbol.size ())
+            tarString = kb_symbol.split (" ");
+            tarCount =  kb_symbol_count;
+            //
+            kb_symbol_count += countMax;
+            if(kb_symbol_count >= tarString.size ())
                 kb_symbol_count = 0;
             break;
         case KB_USER:
-            tarString = kb_user;
+            tarString = kb_user.split (" ");
+            tarCount =  kb_user_count;
+            //
+            kb_user_count += countMax;
+            if(kb_user_count >= tarString.size ())
+                kb_user_count = 0;
             break;
         default:
             return;
     }
+    //对于有多页的界面,当加载了别的窗口后,
+    //当前窗口的候选字符串数组置0,这样下次打开时才会从第一页打开
+    if(type != KB_SYMBOL && type != KB_USER)
+    {
+        kb_symbol_count = 0;
+        kb_user_count = 0;
+        ui->pushButton_32->setText ("其它");
+    }
+    else if(tarString.size () > countMax)
+    {
+        ui->pushButton_32->setText (
+                QString::number (tarCount/countMax+1)+
+                "/"+
+                QString::number (tarString.size ()/countMax+1)+
+                "页");
+    }
     //
     QPushButton *pb;
-    int count = 0;
     foreach (QObject *obj, ui->gridLayoutWidget->children())
     {
         if(obj->objectName ().indexOf("pushButton") == 0)
         {
             pb = (QPushButton*)obj;
-            if(count < tarString.size ())
+            if(tarCount < tarString.size ())
             {
-                QChar val = tarString.at (count);
-                //&符号特殊处理
-                if(val == '&')
-                    pb->setText ("&&");
-                else
-                    pb->setText (val);
+                pb->setText (tarString[tarCount]);
                 pb->setEnabled (true);
             }
             else
@@ -405,8 +425,11 @@ void VInput::grid_load(KB_TYPE type)
                 pb->setText (" ");
                 pb->setEnabled (false);
             }
+            //
+            tarCount ++;
             count++;
-            if(count > 25)
+            //
+            if(count > countMax)
                 break;
         }
     }

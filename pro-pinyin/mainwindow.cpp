@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->pushButton_word->installEventFilter (this);
     ui->pushButton_url->installEventFilter (this);
     ui->pushButton_email->installEventFilter (this);
+    ui->pushButton_user->installEventFilter (this);
 }
 
 MainWindow::~MainWindow()
@@ -107,7 +108,7 @@ void MainWindow::on_pushButton_url_clicked()
     VInput vk(&result,
         VInput::KB_LOWER|
         VInput::KB_NUMBER|
-        VInput::KB_USER, ".-:/");
+        VInput::KB_USER, ". - : /");
     vk.exec ();
     ui->label->setText (result);
 }
@@ -117,7 +118,16 @@ void MainWindow::on_pushButton_email_clicked()
     VInput vk(&result,
         VInput::KB_LOWER|
         VInput::KB_NUMBER|
-        VInput::KB_USER, ".@");
+        VInput::KB_USER, ". @");
+    vk.exec ();
+    ui->label->setText (result);
+}
+
+void MainWindow::on_pushButton_user_clicked()
+{
+    VInput vk(&result,
+        VInput::KB_USER,
+              "《 枫 桥 夜 泊 》 ( 作 者 ： 张 继 ) 月 落 乌 啼 霜 满 天 ， 江 枫 渔 火 对 愁 眠 。 姑 苏 城 外 寒 山 寺 ， 夜 半 钟 声 到 客 船 。 \u2714 \u2718 \u266C");
     vk.exec ();
     ui->label->setText (result);
 }

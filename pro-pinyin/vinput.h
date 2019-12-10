@@ -36,7 +36,15 @@ public:
         KB_USER = 0x20,//该模式时启用userCandidate
     };
 
-    //type包含KB_USER时, 启用userCandidate, userCandidate最大长度25
+    //value: 传入被编辑的字符串
+    //type: 编辑类型,由KB_TYPE组合而成
+    //userCandidate: 用户的自定义的输入内容,每项用空格分开(例如"A B C"),type包含KB_USER时启用
+    //space/multiLine/tab: 是否允许空格,回车,Tab输入
+    //示例:
+    //    IP: VInput(&ret, VInput::KB_NUMBER|VInput::KB_USER, ".");
+    //    email: VInput(&ret, VInput::KB_LOWER|VInput::KB_NUMBER|VInput::KB_USER, ". @");//注意候选项要用空格分开
+    //    任意输入: VInput(&ret, VInput::KB_ANY);
+    //    自定义一些特殊符号: VInput(&ret, VInput::KB_USER, "\u2714 \u2718 \u266C");
     VInput(QString *value = NULL, int type = KB_ANY, QString userCandidate = "", bool space = false, bool multiLine = false, bool tab = false, QWidget *parent = 0);
     ~VInput();
 
@@ -90,12 +98,22 @@ private:
     QString pinyinCandidate = "";//缓存拼音输入
     bool pinyin_run = false;//拼音输入法运行状态
 
-    const QString kb_number = "1234567890";
-    const QString kb_lower = "qwertyuiopasdfghjklzxcvbnm";
-    const QString kb_capital = "QWERTYUIOPASDFGHJKLZXCVBNM";
-    const QStringList kb_symbol = QString("+-*/=:\";',()[]{}<>~!?._@% $#&^\\|`").split (" ");
+    const QString kb_number = "1 2 3 4 5 6 7 8 9 0";
+    const QString kb_lower = "q w e r t y u i o p a s d f g h j k l z x c v b n m";
+    const QString kb_capital = "Q W E R T Y U I O P A S D F G H J K L Z X C V B N M";
+    const QString kb_symbol = 
+        //--- 1页 ---
+        "+ - * / = : \" ; ' , ( ) [ ] { } < > ~ ! ? . _ @ % "
+        //--- 2页 ---
+        "$ # && ^ \\ | ` \u00B0 \u2103 \u2109 "
+        "\u0024 \u00A2 \u00A3 \u00A4 \u20AC \u00A5 \u20B1 \u20B9 \u2260 "
+        "\u00AB \u00BB \u03A9 \u03A8 \u03A6 \u03A3 "
+        //--- 3页 ---
+        "\u03A0 \u039B \u0398 \u0394 \u2190 \u2192 \u2191 \u2193 \u2194 \u2195 "
+        "\u21C4 \u21C5 \u25B2 \u25BC \u25C4 \u25BA \u2764 \u2605 \u2606";
     int kb_symbol_count = 0;
     QString kb_user = "";
+    int kb_user_count = 0;
 };
 
 
