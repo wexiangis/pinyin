@@ -464,17 +464,17 @@ void VInput::comm_pushButton_clicked(bool c)
 bool VInput::clicked_rule(QPushButton *pb)
 {
     //空格
-    if(pb == ui->pushButton_20 && ui->pushButton_20->text().size ()> 1)
+    if(pb == ui->pushButton_20 && ui->pushButton_20->text() == "Space")
     {
         textEdit.insertPlainText (" ");
     }
     //换行
-    else if(pb == ui->pushButton_28 && ui->pushButton_28->text().size () > 1)
+    else if(pb == ui->pushButton_28 && ui->pushButton_28->text() == "Enter")
     {
         textEdit.insertPlainText ("\n");
     }
     //Tab
-    else if(pb == ui->pushButton_27 && ui->pushButton_27->text().size () > 1)
+    else if(pb == ui->pushButton_27 && ui->pushButton_27->text() == "Tab")
     {
         textEdit.insertPlainText ("\t");
     }
