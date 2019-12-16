@@ -11,8 +11,8 @@
 extern QString argv_dictPath;
 extern QString argv_dictUserPath;
 #else
-QString argv_dictPath = "/usr/local/fw6118/dict/dict_pinyin.dat";
-QString argv_dictUserPath = "/usr/local/fw6118/dict/dict_pinyin_user.dat";
+QString argv_dictPath = "../pro-pinyin/dict/dict_pinyin.dat";
+QString argv_dictUserPath = "../pro-pinyin/dict/dict_pinyin_user.dat";
 #endif
 
 //---------- 放在pushButton的UserData中的跳转指针 ----------
